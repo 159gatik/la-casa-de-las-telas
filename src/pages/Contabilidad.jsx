@@ -35,7 +35,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
 
     return (
         <div style={{ padding: '20px' }}>
-            <h2>📊 Registro Contable Histórico</h2>
+            <h2>Registro Contable</h2>
 
             <form onSubmit={handleSubmitVenta} style={stylesContabilidad.form}>
                 <input
@@ -151,7 +151,7 @@ const stylesContabilidad = {
         borderRadius: '8px'
     },
     resumen: {
-        backgroundColor: '#576958',
+        backgroundColor: '#9fbea0',
         padding: '15px',
         borderRadius: '8px',
         margin: '15px 0',

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
+import Login from './components/Login.jsx';
 
 function App() {
     const [inventario, setInventario] = useState(() => {
@@ -31,6 +32,8 @@ function App() {
     useEffect(() => {
         localStorage.setItem("ventas_telas", JSON.stringify(ventas));
     }, [ventas]);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     // Función para registrar la venta manual
     const registrarVentaManual = (nuevaVenta) => {
@@ -86,20 +89,23 @@ function App() {
                     inventario={inventario}
                     onVender={venderMetro}
                 />} />
-                <Route path='/admin' element={<Admin
+                <Route path='/admin' element={isLoggedIn ? <Admin
                     inventario={inventario}
                     onAgregar={agregarTela}
                     onEliminar={eliminarTela}
                     onEditar={editarTela}
                     onReponer={reponerTodo} />
-                    } />
+                    : <Login onLogin={setIsLoggedIn} />}
+                />
+
                 <Route
-                    path='/contabilidad' element={<Contabilidad
+                    path='/contabilidad' element={isLoggedIn ? <Contabilidad
                         inventario={inventario}
                         ventas={ventas}
                         onRegistrarVenta={registrarVentaManual}
                         onEliminarVenta={eliminarVenta}
-                    />}
+                    /> : <Login onLogin={setIsLoggedIn} />
+                    }
                 />
 
 
