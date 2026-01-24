@@ -13,7 +13,7 @@ function App() {
             { id: 1, nombre: 'Algodón', stock: 10, precio: 500, stockInicial: 10 },
             { id: 2, nombre: 'Lino', stock: 5, precio: 800, stockInicial: 5 },
             { id: 3, nombre: 'Seda', stock: 6, precio: 1500, stockInicial: 6 },
-            { id: 4, nombre: 'Denim', stock: 8, precio: 700, stockInicial: 8 },
+            { id: 4, nombre: 'Tafeta', stock: 8, precio: 700, stockInicial: 8 },
         ];
 
     });
