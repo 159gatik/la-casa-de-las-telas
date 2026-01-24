@@ -68,6 +68,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                     placeholder="Monto Total $"
                     value={formVenta.montoTotal}
                     onChange={(e) => setFormVenta({ ...formVenta, montoTotal: e.target.value })}
+
                 />
 
                 <button type="submit">Registrar Venta</button>
@@ -107,7 +108,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                 </thead>
                 <tbody>
                     {ventasProcesadas.map(v => (
-                        <tr key={v.id} style={{ borderBottom: '1px solid #5f5f5f' }}>
+                        <tr key={v.id} style={{ borderBottom: '1px solid #c5c5c5' }}>
                             <td style={stylesContabilidad.td}>{v.fecha}</td>
                             <td style={stylesContabilidad.td}>{v.nombreTela}</td>
                             <td style={stylesContabilidad.td}>{v.metros}m</td>
