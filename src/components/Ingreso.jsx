@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Ingreso = ({ onLogin }) => {
+    const navigate = useNavigate()
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Por ahora, usamos una contraseña fija (mañana será con Firebase)
         if (user === "admin" && pass === "telas2026") {
             onLogin(true);
+            navigate("/")
         } else {
             alert("Usuario o contraseña incorrectos");
         }
@@ -33,4 +35,4 @@ const styles = {
     button: { padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }
 };
 
-export default Login;
+export default Ingreso;

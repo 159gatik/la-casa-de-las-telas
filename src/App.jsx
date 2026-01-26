@@ -1,10 +1,9 @@
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
-import Login from './components/Login.jsx';
-
+import Ingreso from './components/Ingreso.jsx'
 function App() {
     const [inventario, setInventario] = useState(() => {
         const datosGuardados = localStorage.getItem('inventarioTelas');
@@ -20,7 +19,6 @@ function App() {
     useEffect(() => {
         localStorage.setItem('inventarioTelas', JSON.stringify(inventario));
     }, [inventario]);
-
 
     // Estado para el historial de ventas
     const [ventas, setVentas] = useState(() => {
@@ -78,10 +76,18 @@ function App() {
     }
     return (
         <BrowserRouter>
-            <nav style={styles.nav} >
-            <Link to="/" style={styles.link}>Inicio</Link>
+            <nav style={styles.nav} isLoggedIn={isLoggedIn}>
+                <Link to="/" style={styles.link}>Inicio</Link>
+                {!isLoggedIn && (<Link to="/ingreso" style={styles.link}>Ingreso</Link>)}
+
+
+
+                {isLoggedIn && (<> 
                 <Link to="/admin" style={styles.link}>Admin</Link>
                 <Link to="/contabilidad" style={styles.link}>Contabilidad</Link>
+
+                    <button onClick={() => setIsLoggedIn(false)}>Salir</button>
+                </>)}
             </nav>
         
             <Routes>
@@ -89,13 +95,16 @@ function App() {
                     inventario={inventario}
                     onVender={venderMetro}
                 />} />
+                <Route
+                    path='/ingreso'
+                    element={<Ingreso onLogin={setIsLoggedIn} />} />
                 <Route path='/admin' element={isLoggedIn ? <Admin
                     inventario={inventario}
                     onAgregar={agregarTela}
                     onEliminar={eliminarTela}
                     onEditar={editarTela}
                     onReponer={reponerTodo} />
-                    : <Login onLogin={setIsLoggedIn} />}
+                    : <Navigate to="/ingreso" />}
                 />
 
                 <Route
@@ -104,9 +113,10 @@ function App() {
                         ventas={ventas}
                         onRegistrarVenta={registrarVentaManual}
                         onEliminarVenta={eliminarVenta}
-                    /> : <Login onLogin={setIsLoggedIn} />
+                    /> : <Navigate to="/ingreso" />
                     }
                 />
+
 
 
             </Routes>
