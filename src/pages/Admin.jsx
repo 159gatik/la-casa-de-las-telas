@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import CardTela from '../components/CardTela'; // Asegúrate de que la ruta sea la correcta
 
+
 const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
-    const [form, setForm] = useState({ nombre: '', precio: '', stockInicial: '' });
+    const [form, setForm] = useState({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' });
     const [error, setError] = useState("");
     const [editandoId, setEditandoId] = useState(null)
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,6 +62,18 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                     placeholder="Stock Inicial"
                     value={form.stockInicial}
                     onChange={(e) => setForm({ ...form, stockInicial: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="Color (ej: Azul Francia)"
+                    value={form.color}
+                    onChange={(e) => setForm({ ...form, color: e.target.value })}
+                />
+                <input
+                    type="text"
+                    placeholder="URL de la imagen"
+                    value={form.imagen}
+                    onChange={(e) => setForm({ ...form, imagen: e.target.value })}
                 />
 
                 {error && (<p style={{ color: 'red', fontWeight: 'bold', fontSize: '14px' }}>

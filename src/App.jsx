@@ -1,24 +1,30 @@
+import { db } from './firebase'; // El archivo que creamos recién
+import { collection, onSnapshot, query, addDoc } from 'firebase/firestore';
 import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
+
 function App() {
-    const [inventario, setInventario] = useState(() => {
-        const datosGuardados = localStorage.getItem('inventarioTelas');
+    const [inventario, setInventario] = useState([]);
 
-        return datosGuardados ? JSON.parse(datosGuardados) : [
-            { id: 1, nombre: 'Algodón', stock: 10, precio: 500, stockInicial: 10 },
-            { id: 2, nombre: 'Lino', stock: 5, precio: 800, stockInicial: 5 },
-            { id: 3, nombre: 'Seda', stock: 6, precio: 1500, stockInicial: 6 },
-            { id: 4, nombre: 'Tafeta', stock: 8, precio: 700, stockInicial: 8 },
-        ];
-
-    });
     useEffect(() => {
-        localStorage.setItem('inventarioTelas', JSON.stringify(inventario));
-    }, [inventario]);
+        const q = query(collection(db, "telas"));
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const telasFirebase = [];
+            querySnapshot.forEach((doc) => {
+                telasFirebase.push({ ...doc.data(), id: doc.id })
+            })
+            setInventario(telasFirebase)
+        })
+        return () => unsubscribe()
+    }, []);
+
+
+
 
     // Estado para el historial de ventas
     const [ventas, setVentas] = useState(() => {
@@ -60,8 +66,23 @@ function App() {
         setInventario(nuevoInventario);
     }
     
-    const agregarTela = (nueva) => {
-        setInventario([...inventario, { ...nueva, id: Date.now() }]);
+    const agregarTela = async (nueva) => {
+        try {
+            await addDoc(collection(db, "telas"), {
+                nombre: nueva.nombre,
+                precio: Number(nueva.precio),
+                stock: Number(nueva.stock),
+                stockInicial: Number(nueva.stockInicial),
+                color: nueva.color,
+                imagen: nueva.imagen
+            })
+            console.log("tela guardada con exito");
+
+        } catch (error) {
+            console.error("error al guardar:", error)
+            alert("no se pudo guardar en la nube")
+        }
+
     };
 
     const eliminarTela = (id) => {

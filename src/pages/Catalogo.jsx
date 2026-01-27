@@ -15,6 +15,8 @@ function Catalogo({ inventario, onVender }) {
                         nombre={tela.nombre}
                         precio={tela.precio}
                         stock={tela.stock}
+                        color={tela.color}
+                        imagen={tela.imagen}
                         onVender={() => onVender(tela.id)}
                         showAdmin={false}
                     />

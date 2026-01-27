@@ -8,7 +8,7 @@ const Ingreso = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (user === "admin" && pass === "telas2026") {
+        if (user === "admin2026" && pass === "telas2026") {
             onLogin(true);
             navigate("/")
         } else {

@@ -1,4 +1,4 @@
-const CardTela = ({ nombre, stock, precio, onEliminar, showAdmin, onPrepararEdicion }) => {
+const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin, onPrepararEdicion }) => {
     const styles = {
         card: {
             border: '1px solid #ddd',
@@ -19,19 +19,30 @@ const CardTela = ({ nombre, stock, precio, onEliminar, showAdmin, onPrepararEdic
         estiloStock: {
             color: stock < 3 ? 'red' : 'black',
             fontWeight: stock < 3 ? 'bold' : 'normal'
+        },
+        imagenTela: {
+            width: '100%',        // Ocupa todo el ancho de la card
+            height: '150px',      // Altura fija para que todas sean iguales
+            objectFit: 'cover',   // Recorta la imagen para que encaje sin estirarse
+            borderRadius: '8px',  // Bordes redondeaditos para que quede profesional
+            marginBottom: '10px'
         }
     };
 
     //const estiloBoton = { backgroundColor: stock === 0 ? 'gray' : 'green' };
     return (
         <div style={styles.card}>
+            {imagen && (<img
+                src={imagen}
+                alt={nombre}
+                style={styles.imagenTela}
+            />)}
             <h3>{nombre}</h3>
             {stock < 3 && stock > 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Últimos metros!</p>}
             
             {stock > 0 && (<p>Stock: <span style={styles.estiloStock}>{stock}</span></p>)}
            
-
-            
+            {color}
             {stock == 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Sin Stock!</p>}
 
             {showAdmin && (
