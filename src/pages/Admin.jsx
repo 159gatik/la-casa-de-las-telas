@@ -38,7 +38,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
             onAgregar(telaCompleta);
             }
            
-        setForm({ nombre: '', precio: '', stockInicial: '' }); // Limpiar formulario
+        setForm({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' }); // Limpiar formulario
     };
 
     return (

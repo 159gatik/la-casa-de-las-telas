@@ -1,5 +1,5 @@
 import { db } from './firebase'; // El archivo que creamos recién
-import { collection, onSnapshot, query, addDoc } from 'firebase/firestore';
+import { collection, onSnapshot, query, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
@@ -90,10 +90,23 @@ function App() {
     setInventario(nuevoInventario)
     }
 
-    const editarTela = (id, datosActualizados) => {
-        const nuevoInventario = inventario.map(tela =>
-            tela.id === id ? { ...tela, ...datosActualizados } : tela)
-        setInventario(nuevoInventario)
+    const editarTela = async (id, telaActualizada) => {
+        try {
+            const telaRef = doc(db, "telas", id)
+            await updateDoc(telaRef, {
+                nombre: telaActualizada.nombre || "",
+                precio: Number(telaActualizada.precio) || 0,
+                stockInicial: Number(telaActualizada.stockInicial) || 0,
+                stock: Number(telaActualizada.stock) || 0,
+                color: telaActualizada.color || "", // 👈 Salvavidas: si es undefined, usa ""
+                imagen: telaActualizada.imagen
+            })
+            console.log("Actualizada con exito");
+
+        } catch (error) {
+            console.error("Error al editar", error)
+            alert("no se pudo editar")
+        }
     }
     return (
         <BrowserRouter>
