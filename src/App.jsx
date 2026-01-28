@@ -1,5 +1,5 @@
 import { db } from './firebase'; // El archivo que creamos recién
-import { collection, onSnapshot, query, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
@@ -85,9 +85,22 @@ function App() {
 
     };
 
-    const eliminarTela = (id) => {
-        const nuevoInventario = inventario.filter (tela => tela.id !== id)
-    setInventario(nuevoInventario)
+    const eliminarTela = async (id) => {
+
+        const confirmar = window.confirm("Seguro que queres eliminar esta tela?")
+
+        if (confirmar) {
+            try {
+                const telaRef = doc(db, "telas", id)
+                await deleteDoc(telaRef)
+                console.log("Tela eliminada");
+            } catch (error) {
+                console.error("Error al eliminar:", error);
+                alert("No se pudo eliminar la tela")
+            }
+        }
+
+
     }
 
     const editarTela = async (id, telaActualizada) => {

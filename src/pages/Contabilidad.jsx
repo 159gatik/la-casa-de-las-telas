@@ -6,20 +6,27 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
         fecha: '',
         telaId: '',
         metros: '',
+        color: '',
         montoTotal: ''
     })
     const [mesFiltro, setMesFiltro] = useState('')
 
     const handleSubmitVenta = (e) => {
         e.preventDefault();
-        const telaSeleccionada = inventario.find(t => t.id ===Number(formVenta.telaId))
+        const telaSeleccionada = inventario.find(t => String(t.id) === String(formVenta.telaId))
+        if (!telaSeleccionada) {
+            alert("No se encontró la tela seleccionada");
+            return;
+        }
+
         onRegistrarVenta({
             ...formVenta,
-            nombreTela: telaSeleccionada ? telaSeleccionada.nombre : 'Otra',
+            nombreTela: telaSeleccionada.nombre,
             montoTotal: Number(formVenta.montoTotal),
+            color: telaSeleccionada.color || "Sin color",
             metros: Number(formVenta.metros)
         })
-        setFormVenta({fecha: '', telaId:'', metros:'', montoTotal:''})
+        setFormVenta({ fecha: '', telaId: '', metros: '', montoTotal: '', color: '' })
     }
 
     const ventasProcesadas = ventas
@@ -52,9 +59,10 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                 >
                     <option value="">Selecciona la Tela</option>
                     {inventario.map(tela => (
-                        <option key={tela.id} value={tela.id}>{tela.nombre}</option>
+                        <option key={tela.id} value={tela.id}>{tela.nombre} {tela.color ? `(${tela.color})` : ''}</option>
                     ))}
                 </select>
+
 
                 <input
                     type="number"
@@ -102,6 +110,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                     <tr style={{ background: '#5f5f5f', textAlign: 'left' }}>
                         <th style={stylesContabilidad.th}>Fecha</th>
                         <th style={stylesContabilidad.th}>Producto</th>
+                        <th style={stylesContabilidad.th}>Color</th>
                         <th style={stylesContabilidad.th}>Metros</th>
                         <th style={stylesContabilidad.th}>Total</th>
                     </tr>
@@ -111,6 +120,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                         <tr key={v.id} style={{ borderBottom: '1px solid #c5c5c5' }}>
                             <td style={stylesContabilidad.td}>{v.fecha}</td>
                             <td style={stylesContabilidad.td}>{v.nombreTela}</td>
+                            <td style={stylesContabilidad.td}>{v.color}</td>
                             <td style={stylesContabilidad.td}>{v.metros}m</td>
                             <td style={stylesContabilidad.td}>${v.montoTotal}</td>
                             <td style={stylesContabilidad.td}>

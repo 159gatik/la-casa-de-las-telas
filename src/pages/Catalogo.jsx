@@ -2,12 +2,12 @@
 import CardTela from '../components/CardTela';
 
 function Catalogo({ inventario, onVender }) {
- const totalMetros = inventario.reduce((acc, tela) => acc + tela.stock, 0)
+    //const totalMetros = inventario.reduce((acc, tela) => acc + tela.stock, 0)
 ;
     return (
         <div style={{ padding: '20px' }}>
             <h1>La Casa de las Telas</h1>
-            <h2>Metros Totales en stock: {totalMetros} metros </h2>
+            {/*<h2>Metros Totales en stock: {totalMetros} metros </h2>*/}
             <div style={styles.contenedorCards }>
                 {inventario.map(tela => (
                     <CardTela

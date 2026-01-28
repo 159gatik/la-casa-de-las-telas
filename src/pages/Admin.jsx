@@ -94,7 +94,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                     </button> )}
             </form>
             <h3>Gestión de Inventario (Eliminar Productos)</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: "50px" }}>
                 {inventario.map(tela => (
                     <CardTela
                         key={tela.id}
