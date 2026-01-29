@@ -38,12 +38,12 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                 style={styles.imagenTela}
             />)}
             <h3>{nombre}</h3>
-            {stock < 3 && stock > 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Últimos metros!</p>}
+            {stock <= 3 && stock > 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Últimos metros!</p>}
             
             {stock > 0 && (<p>Stock: <span style={styles.estiloStock}>{stock}</span></p>)}
            
             {color}
-            {stock == 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Sin Stock!</p>}
+            {stock <= 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Sin Stock!</p>}
 
             {showAdmin && (
                 <span>

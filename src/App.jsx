@@ -1,5 +1,5 @@
 import { db } from './firebase'; // El archivo que creamos recién
-import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc, increment } from 'firebase/firestore';
 import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
@@ -40,8 +40,18 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     // Función para registrar la venta manual
-    const registrarVentaManual = (nuevaVenta) => {
-        setVentas([...ventas, { ...nuevaVenta, id: Date.now() }]);
+    const registrarVentaManual = async (nuevaVenta) => {
+        try {
+            const telaRef = doc(db, "telas", nuevaVenta.telaId)
+            await updateDoc(telaRef, {
+                stock: increment(-Number(nuevaVenta.metros))
+            })
+            setVentas([...ventas, { ...nuevaVenta, id: Date.now() }])
+            console.log("venta registrada");
+        } catch (error) {
+            console.error("Error de sincronización", error);
+            alert("Se registró la venta, pero no se descontó de firebase")
+        }
     };
 
     const eliminarVenta = (id) => {
