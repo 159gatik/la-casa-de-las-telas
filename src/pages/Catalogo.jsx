@@ -1,7 +1,7 @@
 
 import CardTela from '../components/CardTela';
 
-function Catalogo({ inventario, onVender }) {
+function Catalogo({ inventario }) {
     //const totalMetros = inventario.reduce((acc, tela) => acc + tela.stock, 0)
 ;
     return (
@@ -17,7 +17,7 @@ function Catalogo({ inventario, onVender }) {
                         stock={tela.stock}
                         color={tela.color}
                         imagen={tela.imagen}
-                        onVender={() => onVender(tela.id)}
+                        //onVender={() => onVender(tela.id)}
                         showAdmin={false}
                     />
                 ))}

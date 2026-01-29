@@ -24,8 +24,6 @@ function App() {
     }, []);
 
 
-
-
     // Estado para el historial de ventas
     const [ventas, setVentas] = useState(() => {
         const guardadas = localStorage.getItem("ventas_telas");
@@ -59,15 +57,15 @@ function App() {
         setVentas(nuevoHistorial);
     };
 
-    const venderMetro = (id) => {
-        const nuevoInventario = inventario.map(tela => {
-            if (tela.id === id && tela.stock > 0) {
-                return { ...tela, stock: tela.stock - 1 };
-            }
-            return tela;
-        })
-        setInventario(nuevoInventario);
-    }
+    // const venderMetro = (id) => {
+    //     const nuevoInventario = inventario.map(tela => {
+    //         if (tela.id === id && tela.stock > 0) {
+    //             return { ...tela, stock: tela.stock - 1 };
+    //         }
+    //         return tela;
+    //     })
+    //     setInventario(nuevoInventario);
+    // }
 
     const reponerTodo = () => {
         const nuevoInventario = inventario.map(tela => {
@@ -121,7 +119,7 @@ function App() {
                 precio: Number(telaActualizada.precio) || 0,
                 stockInicial: Number(telaActualizada.stockInicial) || 0,
                 stock: Number(telaActualizada.stock) || 0,
-                color: telaActualizada.color || "", // 👈 Salvavidas: si es undefined, usa ""
+                color: telaActualizada.color || "", // si es undefined usa ""
                 imagen: telaActualizada.imagen
             })
             console.log("Actualizada con exito");
@@ -150,7 +148,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Catalogo
                     inventario={inventario}
-                    onVender={venderMetro}
+                    //onVender={venderMetro}
                 />} />
                 <Route
                     path='/ingreso'
