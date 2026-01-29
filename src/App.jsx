@@ -1,4 +1,4 @@
-import { db } from './firebase'; // El archivo que creamos recién
+import { db } from './firebase';
 import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc, increment } from 'firebase/firestore';
 import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -9,6 +9,15 @@ import Ingreso from './components/Ingreso.jsx'
 
 function App() {
     const [inventario, setInventario] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // Estado para el historial de ventas
+    const [ventas, setVentas] = useState(() => {
+        const guardadas = localStorage.getItem("ventas_telas");
+        return guardadas ? JSON.parse(guardadas) : [];
+    });
+
+
+
 
     useEffect(() => {
         const q = query(collection(db, "telas"));
@@ -24,18 +33,13 @@ function App() {
     }, []);
 
 
-    // Estado para el historial de ventas
-    const [ventas, setVentas] = useState(() => {
-        const guardadas = localStorage.getItem("ventas_telas");
-        return guardadas ? JSON.parse(guardadas) : [];
-    });
 
     // Guardar en localStorage cada vez que cambie
-    useEffect(() => {
-        localStorage.setItem("ventas_telas", JSON.stringify(ventas));
-    }, [ventas]);
+    // useEffect(() => {
+    //     localStorage.setItem("ventas_telas", JSON.stringify(ventas));
+    // }, [ventas]);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
 
     // Función para registrar la venta manual
     const registrarVentaManual = async (nuevaVenta) => {
@@ -52,9 +56,36 @@ function App() {
         }
     };
 
-    const eliminarVenta = (id) => {
-        const nuevoHistorial = ventas.filter(v => v.id !== id);
-        setVentas(nuevoHistorial);
+    //Eliminar un registro de venta
+    const eliminarVenta = async (id) => {
+
+        const ventaAEliminar = ventas.find(v => v.id === id);
+
+        if (!ventaAEliminar || !ventaAEliminar.telaId) {
+            console.error("No se encontró la venta");
+            setVentas(ventas.filter(v => v.id !== id))
+            return;
+        }
+
+        try {
+            const telaRef = doc(db, "telas", String(ventaAEliminar.telaId));
+            await updateDoc(telaRef, {
+                stock: increment((ventaAEliminar.metros))
+            })
+
+            const nuevoHistorial = ventas.filter(v => v.id !== id);
+            setVentas(nuevoHistorial)
+            console.log("Stock reintegrado");
+
+        } catch (error) {
+            console.error("error al reintegrar stock:", error);
+            alert("No se pudo devolver el stock")
+            setVentas(ventas.filter(v => v.id !== id))
+
+
+        }
+
+
     };
 
     // const venderMetro = (id) => {
@@ -67,12 +98,12 @@ function App() {
     //     setInventario(nuevoInventario);
     // }
 
-    const reponerTodo = () => {
-        const nuevoInventario = inventario.map(tela => {
-            return { ...tela, stock: tela.stockInicial };
-        });
-        setInventario(nuevoInventario);
-    }
+    // const reponerTodo = () => {
+    //     const nuevoInventario = inventario.map(tela => {
+    //         return { ...tela, stock: tela.stockInicial };
+    //     });
+    //     setInventario(nuevoInventario);
+    // }
     
     const agregarTela = async (nueva) => {
         try {
@@ -158,7 +189,8 @@ function App() {
                     onAgregar={agregarTela}
                     onEliminar={eliminarTela}
                     onEditar={editarTela}
-                    onReponer={reponerTodo} />
+                //onReponer={reponerTodo}
+                />
                     : <Navigate to="/ingreso" />}
                 />
 

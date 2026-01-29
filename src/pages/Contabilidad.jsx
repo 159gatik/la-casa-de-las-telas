@@ -21,6 +21,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
 
         onRegistrarVenta({
             ...formVenta,
+            telaId: telaSeleccionada.id,
             nombreTela: telaSeleccionada.nombre,
             montoTotal: Number(formVenta.montoTotal),
             color: telaSeleccionada.color || "Sin color",
