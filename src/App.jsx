@@ -16,6 +16,12 @@ function App() {
         return guardadas ? JSON.parse(guardadas) : [];
     });
 
+    const [busqueda, setBusqueda] = useState("");
+
+    const inventarioFiltrado = inventario.filter(tela =>
+        tela.nombre.toLowerCase().includes(busqueda.toLocaleLowerCase()) ||
+        (tela.color && tela.color.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase()))
+    )
 
 
 
@@ -178,7 +184,9 @@ function App() {
         
             <Routes>
                 <Route path='/' element={<Catalogo
-                    inventario={inventario}
+                    inventario={inventarioFiltrado}
+                    busqueda={busqueda}
+                    setBusqueda={setBusqueda}
                     //onVender={venderMetro}
                 />} />
                 <Route
