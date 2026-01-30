@@ -7,7 +7,7 @@ import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
-
+import { Footer } from './components/Footer.jsx';
 
 function App() {
     const [inventario, setInventario] = useState([]);
@@ -242,10 +242,9 @@ function App() {
                     /> : <Navigate to="/ingreso" />
                     }
                 />
-
-
-
             </Routes>
+
+            <Footer />
         </BrowserRouter>
     )
 }

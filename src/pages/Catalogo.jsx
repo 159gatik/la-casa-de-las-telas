@@ -14,7 +14,7 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                 <Input
                     isClearable
                     className="w-full"
-                    placeholder="Escribí el nombre o color..."
+                    placeholder="Escribí el nombre o color de la tela..."
                     variant="bordered"
                     radius="lg"
                     size="lg"

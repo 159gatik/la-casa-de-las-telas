@@ -1,75 +1,68 @@
+import { Card, CardHeader, CardBody, Image, Button, Chip } from "@heroui/react";
+
 const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin, onPrepararEdicion }) => {
-    const styles = {
-        card: {
-            border: '1px solid #ddd',
-            borderRadius: '12px',
-            padding: '15px',
-            width: '250px',        // Ancho fijo para todas
-            minHeight: '300px',    // Altura mínima para que no se deformen
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between', // Empuja los botones hacia abajo
-            boxShadow: '0 4px 6px rgba(12, 6, 6, 0.73)',
-            backgroundColor: '#bbb998',
-            color: '#1a1919',
-            alignItems: 'center',    // 👈 Esto centra los elementos (h3, p, button) horizontalmente
-            textAlign: 'center',
-            
-        },
-        estiloStock: {
-            color: stock < 3 ? 'red' : 'black',
-            fontWeight: stock < 3 ? 'bold' : 'normal'
-        },
-        imagenTela: {
-            width: '100%',        // Ocupa todo el ancho de la card
-            height: '150px',      // Altura fija para que todas sean iguales
-            objectFit: 'cover',   // Recorta la imagen para que encaje sin estirarse
-            borderRadius: '8px',  // Bordes redondeaditos para que quede profesional
-            marginBottom: '10px'
-        }
-    };
-
-    //const estiloBoton = { backgroundColor: stock === 0 ? 'gray' : 'green' };
     return (
-        <div style={styles.card}>
-            {imagen && (<img
-                src={imagen}
-                alt={nombre}
-                style={styles.imagenTela}
-            />)}
-            <h3>{nombre}</h3>
-            {stock <= 3 && stock > 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Últimos metros!</p>}
-            
-            {stock > 0 && (<p>Stock: <span style={styles.estiloStock}>{stock}</span></p>)}
-           
-            {color}
-            {stock <= 0 && <p style={{ color: 'red', fontWeight: 'bold' }}>¡Sin Stock!</p>}
+        <Card className="w-[280px] bg-zinc-900 border border-zinc-800 shadow-xl overflow-hidden group">
+            {/* 🖼️ Imagen de la Tela */}
+            <CardBody className="p-0 relative">
+                {imagen && (
+                    <Image
+                        src={imagen}
+                        alt={nombre}
+                        removeWrapper
+                        className="w-full h-[180px]"
+                        width="100%"
+                    />
+                )}
 
-            {showAdmin && (
-                <span>
-                    {stock > 0 && (<p>Precio: ${precio}</p>)}
-                </span>
-            )}
+                {/* Chips de estado sobre la imagen */}
+                <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
+                    {stock <= 3 && stock > 0 && (
+                        <Chip color="danger" variant="shadow" size="sm" className="font-bold">¡Últimos metros!</Chip>
+                    )}
+                    {stock <= 0 && (
+                        <Chip color="danger" variant="solid" size="sm" className="font-bold">¡Sin Stock!</Chip>
+                    )}
+                </div>
+            </CardBody>
 
+            {/* 📝 Información de la Tela */}
+            <CardHeader className="flex-col items-start px-4 py-3 gap-1">
+                <p className="text-tiny uppercase font-bold text-primary text-white tracking-widest">{color}</p>
+                <h4 className="font-bold text-lg text-white truncate w-full uppercase">{nombre}</h4>
 
-            
+                <div className="flex justify-between w-full items-center mt-2">
+                    <p className="text-default-400  text-white text-sm">
+                        Stock: <span className={stock < 3 ? "text-danger font-bold" : "text-zinc-200"}>{stock}m</span>
+                    </p>
+                    {showAdmin && (
+                        <p className="text-success font-bold text-white text-lg">${precio}</p>
+                    )}
+                </div>
+            </CardHeader>
+
+            {/* 🛠️ Botones de Admin */}
             {showAdmin && (
-                <button onClick={onPrepararEdicion}
-                    style={{ backgroundColor: '#460bb3', color: 'white', marginLeft: '10px' }}>
-                    Editar
-                </button>
+                <div className="p-4 pt-0 flex gap-2 w-full">
+                    <Button
+                        className="flex-1 font-bold text-white bg-indigo-700 hover:bg-indigo-600 shadow-lg shadow-indigo-900/20"
+                        size="sm"
+                        onClick={onPrepararEdicion}
+                    >
+                        Editar
+                    </Button>
+                    <Button
+                        className="flex-1 font-bold text-white bg-red-600 hover:bg-indigo-600 shadow-lg shadow-indigo-900/20"
+                        color="danger"
+                        size="sm"
+                        onClick={onEliminar}
+                    >
+                        Borrar
+                    </Button>
+                </div>
             )}
-            
-            {showAdmin && (
-                <button onClick={onEliminar}
-                style={{ backgroundColor: 'red', color: 'white', marginLeft: '10px' }}>
-                    Eliminar
-            </button>
-            )}
-        </div>
+        </Card>
     );
 };
-
-
 
 export default CardTela;
