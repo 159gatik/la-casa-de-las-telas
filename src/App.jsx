@@ -1,11 +1,13 @@
 import { db } from './firebase';
 import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc, increment } from 'firebase/firestore';
-import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, Navigate, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
+
 
 function App() {
     const [inventario, setInventario] = useState([]);
@@ -168,19 +170,48 @@ function App() {
     }
     return (
         <BrowserRouter>
-            <nav style={styles.nav} isLoggedIn={isLoggedIn}>
-                <Link to="/" style={styles.link}>Inicio</Link>
-                {!isLoggedIn && (<Link to="/ingreso" style={styles.link}>Ingreso</Link>)}
+            <Navbar isBordered className="bg-zinc-900/70 backdrop-blur-md">
+                <NavbarBrand>
+                    <p className="font-bold text-white text-xl tracking-wider">LA CASA DE LAS TELAS</p>
+                </NavbarBrand>
 
+                <NavbarContent className="flex gap-8" justify="center">
+                    <NavbarItem>
+                        <Link to="/" className="text-zinc-300 hover:text-white transition-colors">Inicio</Link>
+                    </NavbarItem>
 
+                    {isLoggedIn && (
+                        <>
+                            <NavbarItem>
+                                <Link to="/admin" className="text-zinc-300 hover:text-white transition-colors">Admin</Link>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Link to="/contabilidad" className="text-zinc-300 hover:text-white transition-colors">Contabilidad</Link>
+                            </NavbarItem>
+                        </>
+                    )}
+                </NavbarContent>
 
-                {isLoggedIn && (<> 
-                <Link to="/admin" style={styles.link}>Admin</Link>
-                <Link to="/contabilidad" style={styles.link}>Contabilidad</Link>
-
-                    <button onClick={() => setIsLoggedIn(false)}>Salir</button>
-                </>)}
-            </nav>
+                <NavbarContent justify="end">
+                    {!isLoggedIn ? (
+                        <NavbarItem>
+                            <Button as={Link} to="/ingreso" color="primary" variant="flat">
+                                Ingreso
+                            </Button>
+                        </NavbarItem>
+                    ) : (
+                        <NavbarItem>
+                            <Button
+                                color="danger"
+                                variant="light"
+                                onClick={() => setIsLoggedIn(false)}
+                            >
+                                Salir
+                            </Button>
+                        </NavbarItem>
+                    )}
+                </NavbarContent>
+            </Navbar>
         
             <Routes>
                 <Route path='/' element={<Catalogo
@@ -219,10 +250,10 @@ function App() {
     )
 }
  
-const styles = {
-    nav: { backgroundColor: '#424242', padding: '10px', display: 'flex', gap: '15px' },
-    link: { color: 'white', textDecoration: 'none', fontWeight: 'bold' }
-} 
+// const styles = {
+//     nav: { backgroundColor: '#424242', padding: '10px', display: 'flex', gap: '15px' },
+//     link: { color: 'white', textDecoration: 'none', fontWeight: 'bold' }
+// } 
 
 
 export default App;

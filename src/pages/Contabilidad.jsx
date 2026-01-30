@@ -11,6 +11,11 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
     })
     const [mesFiltro, setMesFiltro] = useState('')
 
+
+    const telaSeleccionadaActual = inventario.find(t => String(t.id) === String(formVenta.telaId));
+    const stockInsuficiente = telaSeleccionadaActual && Number(formVenta.metros) > telaSeleccionadaActual.stock;
+
+
     const handleSubmitVenta = (e) => {
         e.preventDefault();
         const telaSeleccionada = inventario.find(t => String(t.id) === String(formVenta.telaId))
@@ -18,7 +23,6 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
             alert("No se encontró la tela seleccionada");
             return;
         }
-
         onRegistrarVenta({
             ...formVenta,
             telaId: telaSeleccionada.id,
@@ -45,7 +49,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
         <div style={{ padding: '20px' }}>
             <h2>Registro Contable</h2>
 
-            <form onSubmit={handleSubmitVenta} style={stylesContabilidad.form}>
+            <form onSubmit={handleSubmitVenta} >
                 <input
                     type="date"
                     required
@@ -70,6 +74,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
                     placeholder="Metros vendidos"
                     value={formVenta.metros}
                     onChange={(e) => setFormVenta({ ...formVenta, metros: e.target.value })}
+                    style={{ borderColor: stockInsuficiente ? 'red' : '#ccc' }}
                 />
 
                 <input
@@ -80,16 +85,30 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
 
                 />
 
-                <button type="submit">Registrar Venta</button>
+                {stockInsuficiente && (
+                    <p style={{ color: 'red', fontSize: '12px', width: '100%' }}>
+                        ⚠️ ¡Atención! Solo quedan <strong>{telaSeleccionadaActual.stock}m</strong> disponibles.
+                    </p>
+                )}
+
+
+
+                <button type="submit"
+                    disabled={stockInsuficiente || !formVenta.telaId || !formVenta.metros}
+                    style={{
+                        backgroundColor: stockInsuficiente ? '#ccc' : '#4CAF50',
+                        cursor: stockInsuficiente ? 'not-allowed' : 'pointer'
+                    }}
+                >Registrar Venta</button>
             </form>
 
             <hr />
 
-            <div style={stylesContabilidad.headerReporte}>
+            <div >
                 <h3>Historial de Ingresos</h3>
 
                 {/* FILTRO DE MES */}
-                <div style={stylesContabilidad.filtroContainer}>
+                <div >
                     <label>Filtrar por Mes: </label>
                     <input
                         type="month"
@@ -101,7 +120,7 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
             </div>
 
             {/* RESUMEN DE DINERO */}
-            <div style={stylesContabilidad.resumen}>
+            <div >
                 <p>Ventas encontradas: <strong>{ventasProcesadas.length}</strong></p>
                 <p>Total Recaudado: <strong style={{ color: 'green' }}>${totalRecaudado}</strong></p>
             </div>
@@ -109,22 +128,22 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
             <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
                 <thead>
                     <tr style={{ background: '#5f5f5f', textAlign: 'left' }}>
-                        <th style={stylesContabilidad.th}>Fecha</th>
-                        <th style={stylesContabilidad.th}>Producto</th>
-                        <th style={stylesContabilidad.th}>Color</th>
-                        <th style={stylesContabilidad.th}>Metros</th>
-                        <th style={stylesContabilidad.th}>Total</th>
+                        <th >Fecha</th>
+                        <th >Producto</th>
+                        <th >Color</th>
+                        <th >Metros</th>
+                        <th >Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     {ventasProcesadas.map(v => (
                         <tr key={v.id} style={{ borderBottom: '1px solid #c5c5c5' }}>
-                            <td style={stylesContabilidad.td}>{v.fecha}</td>
-                            <td style={stylesContabilidad.td}>{v.nombreTela}</td>
-                            <td style={stylesContabilidad.td}>{v.color}</td>
-                            <td style={stylesContabilidad.td}>{v.metros}m</td>
-                            <td style={stylesContabilidad.td}>${v.montoTotal}</td>
-                            <td style={stylesContabilidad.td}>
+                            <td >{v.fecha}</td>
+                            <td >{v.nombreTela}</td>
+                            <td >{v.color}</td>
+                            <td >{v.metros}m</td>
+                            <td >${v.montoTotal}</td>
+                            <td >
                                 <button
                                     onClick={() => {
                                         if (window.confirm("¿Seguro que quieres borrar este registro de venta?")) {
@@ -151,27 +170,27 @@ const Contabilidad = ({ inventario, onRegistrarVenta, ventas, onEliminarVenta })
     );
    
 }
-const stylesContabilidad = {
-    form: { display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }
-    ,
-    headerReporte: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#686868',
-        padding: '10px',
-        borderRadius: '8px'
-    },
-    resumen: {
-        backgroundColor: '#9fbea0',
-        padding: '15px',
-        borderRadius: '8px',
-        margin: '15px 0',
-        display: 'flex',
-        gap: '20px',
-        fontSize: '18px'
-    },
-    th: { padding: '12px', borderBottom: '2px solid #ddd' },
-    td: { padding: '12px' }
-};
+// const stylesContabilidad = {
+//     form: { display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }
+//     ,
+//     headerReporte: {
+//         display: 'flex',
+//         justifyContent: 'space-between',
+//         alignItems: 'center',
+//         backgroundColor: '#686868',
+//         padding: '10px',
+//         borderRadius: '8px'
+//     },
+//     resumen: {
+//         backgroundColor: '#9fbea0',
+//         padding: '15px',
+//         borderRadius: '8px',
+//         margin: '15px 0',
+//         display: 'flex',
+//         gap: '20px',
+//         fontSize: '18px'
+//     },
+//     th: { padding: '12px', borderBottom: '2px solid #ddd' },
+//     td: { padding: '12px' }
+// };
 export default Contabilidad;

@@ -122,23 +122,30 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
 
 const styles = {
     container: {
+        display: 'flex',
+        alignItems: 'center', //
         padding: '20px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        fontFamily: 'Arial, sans-serif'
+        width: '100%',
+        minHeight: '80vh'
     },
     formularioContainer: {
         padding: '25px',
         borderRadius: '12px',
         boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
         marginBottom: '30px',
-        transition: 'all 0.3s ease' // Suaviza el cambio de color al editar
+        transition: 'all 0.3s ease',
+        // Suaviza el cambio de color al editar
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
         gap: '15px',
-        maxWidth: '400px'
+        width: '100%',
+        maxWidth: '500px', // 👈 Evita que el formulario se estire demasiado en pantallas grandes
+        backgroundColor: '#2c2c2c',
+        padding: '30px',
+        borderRadius: '12px',
+        boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
     },
     inputGroup: {
         display: 'flex',
