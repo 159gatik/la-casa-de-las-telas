@@ -8,7 +8,7 @@ import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
 import { Footer } from './components/Footer.jsx';
-
+import BotonWhatsApp from './components/BotonWhatsapp.jsx';
 function App() {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -243,7 +243,7 @@ function App() {
                     }
                 />
             </Routes>
-
+            <BotonWhatsApp />
             <Footer />
         </BrowserRouter>
     )

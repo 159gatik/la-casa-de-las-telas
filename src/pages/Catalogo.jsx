@@ -1,13 +1,17 @@
-
-import CardTela from '../components/CardTela';
-
 import { Card, CardHeader, CardBody, Image, Input, Button } from "@heroui/react";
+
 function Catalogo({ inventario, busqueda, setBusqueda }) {
-    //const totalMetros = inventario.reduce((acc, tela) => acc + tela.stock, 0)
-;
+
+    // Función para manejar el clic y abrir WhatsApp
+    const handleWhatsAppClick = (tela) => {
+        const numero = "54911XXXXXXXX"; // 👈 Poné acá tu número real
+        const mensaje = encodeURIComponent(`¡Hola! Me interesa la tela ${tela.nombre} en color ${tela.color || 'a elección'}. ¿Tienen stock?`);
+        window.open(`https://wa.me/${numero}?text=${mensaje}`, "_blank");
+    };
+
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-background p-6">
-            <h1 className="text-4xl font-bold text-white mb-8 tracking-tighter">NUESTRAS TELAS</h1>
+            <h1 className="text-4xl font-bold text-white mb-8 tracking-tighter uppercase">NUESTRAS TELAS</h1>
 
             {/* 🔍 Buscador Estilizado */}
             <div className="w-full max-w-xl mb-12">
@@ -20,7 +24,6 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                     size="lg"
                     value={busqueda}
                     onValueChange={setBusqueda}
-                    startContent={<span className="text-2xl"></span>}
                 />
             </div>
 
@@ -28,7 +31,7 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
             <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {inventario.length > 0 ? (
                     inventario.map((tela) => (
-                        <Card key={tela.id} className="bg-zinc-900 border-none shadow-xl hover:scale-105 transition-transform">
+                        <Card key={tela.id} className="bg-zinc-900 border-none shadow-xl hover:scale-105 transition-transform flex flex-col h-full">
                             <CardBody className="p-0 overflow-visible">
                                 <Image
                                     alt={tela.nombre}
@@ -37,7 +40,7 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                                     width="100%"
                                 />
                             </CardBody>
-                            <CardHeader className="flex-col items-start px-4 py-4">
+                            <CardHeader className="flex-col items-start px-4 py-4 gap-2 flex-grow">
                                 <div className="flex justify-between text-white w-full items-center mb-1">
                                     <p className="text-tiny uppercase font-bold text-primary">{tela.color}</p>
                                     <div className="bg-green-900/30 px-2 py-1 rounded text-green-400 text-xs font-bold">
@@ -45,13 +48,24 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                                     </div>
                                 </div>
                                 <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
-                                <p className="text-default-500 text-white font-semibold mt-1 text-lg">${tela.precio} <span className="text-xs font-normal">/ metro</span></p>
+                                <p className="text-white font-semibold mt-1 text-lg">
+                                    ${tela.precio} <span className="text-xs font-normal text-zinc-500">/ metro</span>
+                                </p>
+
+                                {/* 🟢 BOTÓN DE WHATSAPP INTEGRADO */}
+                                <Button
+                                    className="w-full mt-4 font-bold bg-[#25D366] text-white shadow-lg hover:bg-[#20ba5a]"
+                                    radius="md"
+                                    onClick={() => handleWhatsAppClick(tela)}
+                                    isDisabled={tela.stock <= 0}
+                                >
+                                    {tela.stock <= 0 ? "SIN STOCK" : "CONSULTAR WHATSAPP"}
+                                </Button>
                             </CardHeader>
                         </Card>
                     ))
                 ) : (
-                    /* ⚠️ Empty State (Aviso de no encontrado) */
-                    <div className="col-span-full flex flex-col items-center py-20  rounded-3xl border-2 border-dashed border-zinc-800">
+                        <div className="col-span-full flex flex-col items-center py-20 rounded-3xl border-2 border-dashed border-zinc-800">
                         <p className="text-zinc-500 text-xl mb-4">No se encontraron telas que coincidan con "{busqueda}"</p>
                         <Button color="primary" variant="flat" onClick={() => setBusqueda("")}>
                             Ver todo el catálogo
@@ -61,20 +75,6 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
             </div>
         </div>
     );
-
-    
 }
-// const styles = {
-//     // ... tus otros estilos
-//     contenedorCards: {
-//         display: 'flex',      // Activa el modo flexible
-//         flexWrap: 'wrap',    // Si no entran más, saltan a la fila de abajo
-//         gap: '20px',         // Espacio entre cada tarjeta
-//         justifyContent: 'center', // Centra las tarjetas en la pantalla
-//         padding: '20px'
-//     },
-//     buscadorContainer: { marginBottom: '30px', display: 'flex', justifyContent: 'center', gap: '10px' },
-//     buscadorInput: { padding: '12px', width: '300px', borderRadius: '25px', border: '1px solid #ccc', fontSize: '16px' },
-//     botonLimpiar: { background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold', color: 'red' }
-// };
+
 export default Catalogo;

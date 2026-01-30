@@ -1,6 +1,8 @@
 import { Card, CardHeader, CardBody, Image, Button, Chip } from "@heroui/react";
 
 const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin, onPrepararEdicion }) => {
+
+
     return (
         <Card className="w-[280px] bg-zinc-900 border border-zinc-800 shadow-xl overflow-hidden group">
             {/* 🖼️ Imagen de la Tela */}
@@ -24,6 +26,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                         <Chip color="danger" variant="solid" size="sm" className="font-bold">¡Sin Stock!</Chip>
                     )}
                 </div>
+
             </CardBody>
 
             {/* 📝 Información de la Tela */}
@@ -38,7 +41,9 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                     {showAdmin && (
                         <p className="text-success font-bold text-white text-lg">${precio}</p>
                     )}
+
                 </div>
+
             </CardHeader>
 
             {/* 🛠️ Botones de Admin */}
@@ -51,6 +56,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                     >
                         Editar
                     </Button>
+
                     <Button
                         className="flex-1 font-bold text-white bg-red-600 hover:bg-indigo-600 shadow-lg shadow-indigo-900/20"
                         color="danger"
@@ -59,8 +65,10 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                     >
                         Borrar
                     </Button>
+
                 </div>
             )}
+
         </Card>
     );
 };
