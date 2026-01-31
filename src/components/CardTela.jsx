@@ -5,7 +5,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
 
     return (
         <Card className="w-[280px] bg-zinc-900 border border-zinc-800 shadow-xl overflow-hidden group">
-            {/* 🖼️ Imagen de la Tela */}
+            {/* Imagen de la Tela */}
             <CardBody className="p-0 relative">
                 {imagen && (
                     <Image
@@ -29,7 +29,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
 
             </CardBody>
 
-            {/* 📝 Información de la Tela */}
+            {/* Información de la Tela */}
             <CardHeader className="flex-col items-start px-4 py-3 gap-1">
                 <p className="text-tiny uppercase font-bold text-primary text-white tracking-widest">{color}</p>
                 <h4 className="font-bold text-lg text-white truncate w-full uppercase">{nombre}</h4>

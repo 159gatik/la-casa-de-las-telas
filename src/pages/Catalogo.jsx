@@ -1,19 +1,22 @@
 import { Card, CardHeader, CardBody, Image, Input, Button } from "@heroui/react";
-
+import BotonWhatsApp from "../components/BotonWhatsapp";
 function Catalogo({ inventario, busqueda, setBusqueda }) {
 
-    // Función para manejar el clic y abrir WhatsApp
-    const handleWhatsAppClick = (tela) => {
-        const numero = "54911XXXXXXXX"; // 👈 Poné acá tu número real
-        const mensaje = encodeURIComponent(`¡Hola! Me interesa la tela ${tela.nombre} en color ${tela.color || 'a elección'}. ¿Tienen stock?`);
-        window.open(`https://wa.me/${numero}?text=${mensaje}`, "_blank");
+    const enviarConsultaWhatsApp = (tela) => {
+        const numeroTelefono = "5493704905184"; // El número de tu imagen
+        const mensaje = encodeURIComponent(
+            `¡Hola! Consulto por la tela: ${tela.nombre} - color: ${tela.color}. `
+        );
+        const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
+
+        window.open(url, "_blank");
     };
 
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-background p-6">
             <h1 className="text-4xl font-bold text-white mb-8 tracking-tighter uppercase">NUESTRAS TELAS</h1>
 
-            {/* 🔍 Buscador Estilizado */}
+            {/*  Buscador Estilizado */}
             <div className="w-full max-w-xl mb-12">
                 <Input
                     isClearable
@@ -49,25 +52,25 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                                 </div>
                                 <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
                                 <p className="text-white font-semibold mt-1 text-lg">
-                                    ${tela.precio} <span className="text-xs font-normal text-zinc-500">/ metro</span>
+                                    ${tela.precio} <span className="text-xs font-normal text-white">/ metro</span>
                                 </p>
 
                                 {/* 🟢 BOTÓN DE WHATSAPP INTEGRADO */}
                                 <Button
                                     className="w-full mt-4 font-bold bg-[#25D366] text-white shadow-lg hover:bg-[#20ba5a]"
                                     radius="md"
-                                    onClick={() => handleWhatsAppClick(tela)}
+                                    onClick={() => enviarConsultaWhatsApp(tela)}
                                     isDisabled={tela.stock <= 0}
                                 >
-                                    {tela.stock <= 0 ? "SIN STOCK" : "CONSULTAR WHATSAPP"}
+                                    {tela.stock <= 0 ? "SIN STOCK" : "CONSULTAR x WHATSAPP"}
                                 </Button>
                             </CardHeader>
                         </Card>
                     ))
                 ) : (
-                        <div className="col-span-full flex flex-col items-center py-20 rounded-3xl border-2 border-dashed border-zinc-800">
+                        <div className="col-span-full flex flex-col items-center py-20 rounded-3xl border-2  border-zinc-800">
                         <p className="text-zinc-500 text-xl mb-4">No se encontraron telas que coincidan con "{busqueda}"</p>
-                        <Button color="primary" variant="flat" onClick={() => setBusqueda("")}>
+                            <Button color="success" variant="flat" onClick={() => setBusqueda("")}>
                             Ver todo el catálogo
                         </Button>
                     </div>

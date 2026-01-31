@@ -6,12 +6,8 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
     const [form, setForm] = useState({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' });
     const [editandoId, setEditandoId] = useState(null);
 
-    // HeroUI Form maneja el evento de envío de forma más limpia
     const onSubmit = (e) => {
         e.preventDefault();
-
-        // Obtenemos los datos directamente del formulario si quisiéramos, 
-        // pero seguiremos usando tu estado 'form' para mantener tu lógica
         const telaCompleta = {
             ...form,
             precio: Number(form.precio),

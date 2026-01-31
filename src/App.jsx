@@ -169,6 +169,7 @@ function App() {
         }
     }
     return (
+        <div className="flex flex-col min-h-screen"> 
         <BrowserRouter>
             <Navbar isBordered className="bg-zinc-900/70 backdrop-blur-md">
                 <NavbarBrand>
@@ -212,7 +213,7 @@ function App() {
                     )}
                 </NavbarContent>
             </Navbar>
-        
+                <main className='flex-grow'> 
             <Routes>
                 <Route path='/' element={<Catalogo
                     inventario={inventarioFiltrado}
@@ -242,10 +243,13 @@ function App() {
                     /> : <Navigate to="/ingreso" />
                     }
                 />
-            </Routes>
+                    </Routes>
+                </main>
             <BotonWhatsApp />
-            <Footer />
-        </BrowserRouter>
+                <Footer />
+
+            </BrowserRouter>
+        </div>
     )
 }
  

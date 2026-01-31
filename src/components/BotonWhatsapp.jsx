@@ -2,8 +2,11 @@ import { Button } from "@heroui/react";
 import { MessageCircle } from "lucide-react"; // Icono similar a WhatsApp
 
 const BotonWhatsApp = () => {
-    const numeroTelefono = "54911XXXXXXXX"; // 👈 Reemplaza con tu número (código de país + área + número)
-    const mensaje = encodeURIComponent("Hola! Vengo de la web y quería consultar por una tela.");
+    const numeroTelefono = "5493704905184"; // 👈 Reemplaza con tu número (código de país + área + número)
+    const mensaje = encodeURIComponent(
+        `¡Hola! Quisiera saber el precio de una tela`
+    );
+
     const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
 
     return (
