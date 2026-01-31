@@ -47,7 +47,7 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                                 <div className="flex justify-between text-white w-full items-center mb-1">
                                     <p className="text-tiny uppercase font-bold text-primary">{tela.color}</p>
                                     <div className="bg-green-900/30 px-2 py-1 rounded text-green-400 text-xs font-bold">
-                                        {tela.stock} mtrs disponibles
+                                        DISPONIBLE
                                     </div>
                                 </div>
                                 <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
