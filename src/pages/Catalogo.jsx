@@ -46,14 +46,14 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                             <CardHeader className="flex-col items-start px-4 py-4 gap-2 flex-grow">
                                 <div className="flex justify-between text-white w-full items-center mb-1">
                                     <p className="text-tiny uppercase font-bold text-primary">{tela.color}</p>
-                                    <div className="bg-green-900/30 px-2 py-1 rounded text-green-400 text-xs font-bold">
+                                    {/* <div className="bg-green-900/30 px-2 py-1 rounded text-green-400 text-xs font-bold">
                                         DISPONIBLE
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
-                                <p className="text-white font-semibold mt-1 text-lg">
-                                    ${tela.precio} <span className="text-xs font-normal text-white">/ metro</span>
-                                </p>
+                                <div className="bg-green-900/30 px-10 py-2 rounded text-green-400 text-xs font-bold">
+                                    DISPONIBLE
+                                </div>
 
                                 {/* 🟢 BOTÓN DE WHATSAPP INTEGRADO */}
                                 <Button

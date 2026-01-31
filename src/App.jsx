@@ -173,9 +173,8 @@ function App() {
         <BrowserRouter>
             <Navbar isBordered className="bg-zinc-900/70 backdrop-blur-md">
                 <NavbarBrand>
-                    <p className="font-bold text-white text-xl tracking-wider">LA CASA DE LAS TELAS</p>
-                </NavbarBrand>
-
+                        <p className="font-bold text-white text-xl tracking-wider">LA CASA DE LAS TELAS</p>
+                    </NavbarBrand>
                 <NavbarContent className="flex gap-8" justify="center">
                     <NavbarItem>
                         <Link to="/" className="text-zinc-300 hover:text-white transition-colors">Inicio</Link>
