@@ -6,9 +6,12 @@ import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
+import { Image as HeroImage } from "@heroui/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
 import { Footer } from './components/Footer.jsx';
 import BotonWhatsApp from './components/BotonWhatsapp.jsx';
+import ImgBanner from './assets/banner/telas-banner.png'
+
 function App() {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -211,7 +214,8 @@ function App() {
                         </NavbarItem>
                     )}
                 </NavbarContent>
-            </Navbar>
+                </Navbar>
+                <HeroImage src={ImgBanner} alt='Banner' removeWrapper />
                 <main className='flex-grow'> 
             <Routes>
                 <Route path='/' element={<Catalogo
