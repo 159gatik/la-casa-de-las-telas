@@ -6,12 +6,11 @@ import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
-import { Image as HeroImage } from "@heroui/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
 import { Footer } from './components/Footer.jsx';
 import BotonWhatsApp from './components/BotonWhatsapp.jsx';
-import ImgBanner from './assets/banner/telas-banner.png'
-
+import { Banner } from './components/Banner.jsx';
+import { AccesoDirectos } from './components/AccesosDirectos.jsx';
 function App() {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -20,15 +19,17 @@ function App() {
         const guardadas = localStorage.getItem("ventas_telas");
         return guardadas ? JSON.parse(guardadas) : [];
     });
-
     const [busqueda, setBusqueda] = useState("");
+    const [filtroActivo, setFiltroActivo] = useState("Todas");
+
+
+
+
 
     const inventarioFiltrado = inventario.filter(tela =>
         tela.nombre.toLowerCase().includes(busqueda.toLocaleLowerCase()) ||
         (tela.color && tela.color.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase()))
     )
-
-
 
     useEffect(() => {
         const q = query(collection(db, "telas"));
@@ -98,24 +99,6 @@ function App() {
 
 
     };
-
-    // const venderMetro = (id) => {
-    //     const nuevoInventario = inventario.map(tela => {
-    //         if (tela.id === id && tela.stock > 0) {
-    //             return { ...tela, stock: tela.stock - 1 };
-    //         }
-    //         return tela;
-    //     })
-    //     setInventario(nuevoInventario);
-    // }
-
-    // const reponerTodo = () => {
-    //     const nuevoInventario = inventario.map(tela => {
-    //         return { ...tela, stock: tela.stockInicial };
-    //     });
-    //     setInventario(nuevoInventario);
-    // }
-    
     const agregarTela = async (nueva) => {
         try {
             await addDoc(collection(db, "telas"), {
@@ -162,7 +145,8 @@ function App() {
                 stockInicial: Number(telaActualizada.stockInicial) || 0,
                 stock: Number(telaActualizada.stock) || 0,
                 color: telaActualizada.color || "", // si es undefined usa ""
-                imagen: telaActualizada.imagen
+                imagen: telaActualizada.imagen,
+                categoria: telaActualizada.categoria
             })
             console.log("Actualizada con exito");
 
@@ -215,15 +199,23 @@ function App() {
                     )}
                 </NavbarContent>
                 </Navbar>
-                <HeroImage src={ImgBanner} alt='Banner' removeWrapper />
+
+
                 <main className='flex-grow'> 
             <Routes>
-                <Route path='/' element={<Catalogo
-                    inventario={inventarioFiltrado}
-                    busqueda={busqueda}
-                    setBusqueda={setBusqueda}
-                    //onVender={venderMetro}
-                />} />
+                        <Route path='/' element={
+                            <>
+                                <Banner />
+                                <AccesoDirectos setFiltroActivo={setFiltroActivo} />
+                                <Catalogo
+                                    inventario={inventarioFiltrado}
+                                    busqueda={busqueda}
+                                    setBusqueda={setBusqueda}
+                                    filtroActivo={filtroActivo}
+                                    setFiltroActivo={setFiltroActivo}
+                                />
+                            </>
+                        } />
                 <Route
                     path='/ingreso'
                     element={<Ingreso onLogin={setIsLoggedIn} />} />

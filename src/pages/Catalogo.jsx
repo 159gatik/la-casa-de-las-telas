@@ -1,6 +1,33 @@
-import { Card, CardHeader, CardBody, Image, Input, Button } from "@heroui/react";
-import BotonWhatsApp from "../components/BotonWhatsapp";
-function Catalogo({ inventario, busqueda, setBusqueda }) {
+import { Card, CardHeader, CardBody, Image as HeroImage, Input, Button } from "@heroui/react";
+
+function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroActivo }) {
+
+
+    const nombresDeTelas = ["Todas", ...new Set(inventario.map((tela) => tela.nombre.toUpperCase()))]
+
+
+    const inventarioFiltrado = inventario.filter((item) => {
+        // Normalizamos todo para que no importen tildes ni mayúsculas
+        const normalizar = (t) => t ? String(t).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
+
+        const busquedaTerm = normalizar(busqueda);
+        const nombreItem = normalizar(item.nombre);
+        const categoriaItem = normalizar(item.categoria); // 👈 Importante normalizar la categoría también
+
+        // 1. Coincidencia por texto (Buscador)
+        const coincideBusqueda = busquedaTerm === "" ||
+            nombreItem.includes(busquedaTerm) ||
+            categoriaItem.includes(busquedaTerm);
+
+        // 2. Coincidencia por Botón/Categoría
+        // Comparamos el filtro activo con la categoría del item
+        const coincideFiltro = filtroActivo === "Todas" ||
+            normalizar(item.categoria) === normalizar(filtroActivo) ||
+            normalizar(item.nombre) === normalizar(filtroActivo);
+
+        return coincideBusqueda && coincideFiltro;
+    });
+
 
     const enviarConsultaWhatsApp = (tela) => {
         const numeroTelefono = "5493704905184"; // El número de tu imagen
@@ -30,13 +57,30 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                 />
             </div>
 
+            <div className="w-full max-w-10xl flex gap-2 overflow-x-auto pb-4 mb-8 justify-center flex-wrap">
+                {nombresDeTelas.map((nombre) => (
+                    <Button
+                        key={nombre}
+                        size="sm"
+                        radius="full"
+                        // Cambia de color si está seleccionado (primary) o si no (default/zinc)
+                        color={filtroActivo === nombre ? "primary" : "default"}
+                        variant={filtroActivo === nombre ? "solid" : "faded"}
+                        className={filtroActivo === nombre ? "font-bold shadow-lg text-black" : "text-zinc-400"}
+                        onClick={() => setFiltroActivo(nombre)}
+                    >
+                        {nombre}
+                    </Button>
+                ))}
+            </div>
+
             {/* 🧶 Cuadrícula de Telas */}
             <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {inventario.length > 0 ? (
-                    inventario.map((tela) => (
+                {inventarioFiltrado.length > 0 ? (
+                    inventarioFiltrado.map((tela) => (
                         <Card key={tela.id} className="bg-zinc-900 border-none shadow-xl hover:scale-105 transition-transform flex flex-col h-full">
                             <CardBody className="p-0 overflow-visible">
-                                <Image
+                                <HeroImage
                                     alt={tela.nombre}
                                     className="w-full object-cover h-[240px] rounded-b-none"
                                     src={tela.imagen || "https://via.placeholder.com/300"}
@@ -55,7 +99,7 @@ function Catalogo({ inventario, busqueda, setBusqueda }) {
                                     DISPONIBLE
                                 </div>
 
-                                {/* 🟢 BOTÓN DE WHATSAPP INTEGRADO */}
+                                {/*BOTÓN DE WHATSAPP s */}
                                 <Button
                                     className="w-full mt-4 font-bold bg-[#25D366] text-white shadow-lg hover:bg-[#20ba5a]"
                                     radius="md"

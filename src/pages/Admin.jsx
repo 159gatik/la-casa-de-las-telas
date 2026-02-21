@@ -1,10 +1,18 @@
 import { useState } from 'react';
-import { Input, Button, Card, CardBody, Divider, Alert, Form } from "@heroui/react"; // 👈 Importamos lo nuevo
+import { Input, Button, Card, CardBody, Divider, Form, Select, SelectItem } from "@heroui/react"; // 👈 Importamos lo nuevo
 import CardTela from '../components/CardTela';
 
 const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
-    const [form, setForm] = useState({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' });
+    const [form, setForm] = useState({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '', categoria: '' });
     const [editandoId, setEditandoId] = useState(null);
+    const CATEGORIAS_LISTA = [
+        { key: "TELAS", label: "Telas" },
+        { key: "MERCERIA", label: "Mercería" },
+        { key: "HERRAMIENTAS", label: "Herramientas" },
+        { key: "OFERTAS", label: "Ofertas" }
+    ]
+
+
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -12,7 +20,8 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
             ...form,
             precio: Number(form.precio),
             stock: Number(form.stockInicial),
-            stockInicial: Number(form.stockInicial)
+            stockInicial: Number(form.stockInicial),
+            categoria: form.categoria.trim().toUpperCase()
         };
 
         if (editandoId) {
@@ -22,7 +31,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
             onAgregar(telaCompleta);
         }
 
-        setForm({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' });
+        setForm({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '', categoria: '' });
     };
 
     return (
@@ -41,7 +50,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                         onSubmit={onSubmit}
                         onReset={() => {
                             setEditandoId(null);
-                            setForm({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '' });
+                            setForm({ nombre: '', precio: '', stockInicial: '', color: '', imagen: '', categoria: '' });
                         }}
                     >
                         <Input
@@ -54,6 +63,35 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                             onValueChange={(val) => setForm({ ...form, nombre: val })}
                             errorMessage="El nombre es obligatorio" //
                         />
+
+                        <Select
+                            isRequired
+                            label="Categoría"
+                            labelPlacement="outside"
+                            placeholder="Seleccioná una categoría"
+                            className="w-full"
+                            // Usamos selectedKeys para que marque la opción cuando estás editando
+                            selectedKeys={form.categoria ? [form.categoria] : []}
+                            // Al cambiar, actualizamos el estado del objeto 'form'
+                            onSelectionChange={(keys) => {
+                                const selected = Array.from(keys)[0]; // Obtenemos la key seleccionada
+                                setForm({ ...form, categoria: selected });
+                            }}
+                            popoverProps={{
+                                classNames: {
+                                    content: "bg-zinc-900 border border-zinc-800 shadow-xl text-white",
+                                },
+                            }}
+                            errorMessage="La categoría es obligatoria para el catálogo"
+                        >
+                            {CATEGORIAS_LISTA.map((cat) => (
+                                <SelectItem key={cat.key} textValue={cat.label}>
+                                    {cat.label}
+                                </SelectItem>
+                            ))}
+                        </Select>
+
+
 
                         <div className="flex gap-4 w-full">
                             <Input
@@ -143,7 +181,8 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                                     precio: tela.precio,
                                     stockInicial: tela.stockInicial,
                                     color: tela.color || '',
-                                    imagen: tela.imagen || ''
+                                    imagen: tela.imagen || '',
+                                    categoria: tela.categoria || ''
                                 });
                                 window.scrollTo({ top: 0, behavior: 'smooth' }); //
                             }}
