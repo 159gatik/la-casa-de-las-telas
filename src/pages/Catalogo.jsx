@@ -1,9 +1,10 @@
-import { Card, CardHeader, CardBody, Image as HeroImage, Input, Button } from "@heroui/react";
-
+import { Card, CardHeader, CardBody, Image as HeroImage, Pagination, Input, Button } from "@heroui/react";
+import { useState } from "react";
 function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroActivo }) {
 
-
     const nombresDeTelas = ["Todas", ...new Set(inventario.map((tela) => tela.nombre.toUpperCase()))]
+    const [pagina, setPagina] = useState(1);
+    const productosPorPagina = 8;
 
 
     const inventarioFiltrado = inventario.filter((item) => {
@@ -39,9 +40,17 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
         window.open(url, "_blank");
     };
 
+
+    const paginasTotales = Math.ceil(inventarioFiltrado.length / productosPorPagina);
+
+
+    const itemsPaginados = inventarioFiltrado.slice(
+        (pagina - 1) * productosPorPagina,
+        pagina * productosPorPagina
+    );
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-background p-6">
-            <h1 className="text-4xl font-bold text-white mb-8 tracking-tighter uppercase">NUESTRAS TELAS</h1>
+            {/* <h1 className="text-4xl font-bold mb-8 tracking-tighter uppercase">NUESTRAS TELAS</h1> */}
 
             {/*  Buscador Estilizado */}
             <div className="w-full max-w-xl mb-12">
@@ -66,7 +75,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                         // Cambia de color si está seleccionado (primary) o si no (default/zinc)
                         color={filtroActivo === nombre ? "primary" : "default"}
                         variant={filtroActivo === nombre ? "solid" : "faded"}
-                        className={filtroActivo === nombre ? "font-bold shadow-lg text-black" : "text-zinc-400"}
+                        className={filtroActivo === nombre ? "font-bold shadow-lg text-black" : "text-[#312107]"}
                         onClick={() => setFiltroActivo(nombre)}
                     >
                         {nombre}
@@ -77,7 +86,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
             {/* 🧶 Cuadrícula de Telas */}
             <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {inventarioFiltrado.length > 0 ? (
-                    inventarioFiltrado.map((tela) => (
+                    itemsPaginados.map((tela) => (
                         <Card key={tela.id} className="bg-zinc-900 border-none shadow-xl hover:scale-105 transition-transform flex flex-col h-full">
                             <CardBody className="p-0 overflow-visible">
                                 <HeroImage
@@ -120,7 +129,25 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                     </div>
                 )}
             </div>
+            {paginasTotales > 1 && (
+                <div className="flex justify-center mt-10 mb-6">
+                    <Pagination
+                        isCompact
+                        showControls
+                        classNames={{
+                            wrapper: "gap-2", // Espaciado entre números
+                            item: "bg-transparent text-zinc-600 hover:bg-zinc-100", // Números normales
+                            cursor: "bg-[#312107] text-white font-bold", // El círculo que indica la página actual
+                        }}
+                        page={pagina}
+                        total={paginasTotales}
+                        onChange={(setPagina)
+                        }
+                    />
+                </div>
+            )}
         </div>
+
     );
 }
 

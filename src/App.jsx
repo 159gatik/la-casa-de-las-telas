@@ -158,9 +158,9 @@ function App() {
     return (
         <div className="flex flex-col min-h-screen"> 
         <BrowserRouter>
-            <Navbar isBordered className="bg-zinc-900/70 backdrop-blur-md">
-                <NavbarBrand>
-                        <p className="font-bold text-white text-xl tracking-wider">LA CASA DE LAS TELAS</p>
+                <Navbar isBordered className="bg-[#62420e] backdrop-blur-md">
+                    <NavbarBrand>
+                        <Link to="/" className="font-bold text-3xl text-zinc-300 hover:text-white transition-colors">LA CASA DE LAS TELAS</Link>
                     </NavbarBrand>
                 <NavbarContent className="flex gap-8" justify="center">
                     <NavbarItem>
@@ -179,7 +179,7 @@ function App() {
                     )}
                 </NavbarContent>
 
-                <NavbarContent justify="end">
+                    {/* <NavbarContent justify="end">
                     {!isLoggedIn ? (
                         <NavbarItem>
                             <Button as={Link} to="/ingreso" color="primary" variant="flat">
@@ -197,7 +197,7 @@ function App() {
                             </Button>
                         </NavbarItem>
                     )}
-                </NavbarContent>
+                </NavbarContent> */}
                 </Navbar>
 
 
