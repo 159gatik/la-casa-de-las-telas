@@ -9,20 +9,20 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
 
     const inventarioFiltrado = inventario.filter((item) => {
-        // Normalizamos todo para que no importen tildes ni mayúsculas
+        // se normaiza todo para que no haya tildes ni mayúsculas
         const normalizar = (t) => t ? String(t).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
         const busquedaTerm = normalizar(busqueda);
         const nombreItem = normalizar(item.nombre);
         const categoriaItem = normalizar(item.categoria); // 👈 Importante normalizar la categoría también
 
-        // 1. Coincidencia por texto (Buscador)
+        // Coincidencia por texto para el buscacor
         const coincideBusqueda = busquedaTerm === "" ||
             nombreItem.includes(busquedaTerm) ||
             categoriaItem.includes(busquedaTerm);
 
-        // 2. Coincidencia por Botón/Categoría
-        // Comparamos el filtro activo con la categoría del item
+        // Coincidencia por Botón de Categoría
+        // se compara el filtro activo con la categoría del item
         const coincideFiltro = filtroActivo === "Todas" ||
             normalizar(item.categoria) === normalizar(filtroActivo) ||
             normalizar(item.nombre) === normalizar(filtroActivo);
@@ -52,7 +52,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-background p-6">
-            {/* 1. Buscador centrado arriba (opcional, podés ponerlo también dentro del main) */}
+            {/* Buscador centrado */}
             <div className="w-full max-w-xl mb-12">
                 <Input
                     isClearable
@@ -69,7 +69,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
             {/* CONTENEDOR PRINCIPAL: Flexbox para Sidebar y Contenido */}
             <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1400px]">
 
-                {/* 2. COLUMNA IZQUIERDA: Filtros (Menú Lateral) */}
+                {/* COLUMNA IZQUIERDA: Filtros */}
                 <aside className="w-full md:w-72 flex-shrink-0">
                     <div className="sticky top-24"> {/* Se queda pegado al hacer scroll */}
                         <h2 className="text-xl font-bold font-serif mb-6 flex items-center gap-2 text-[#312107] uppercase tracking-wider border-b border-zinc-800 pb-2">
@@ -88,7 +88,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                                 VER TODO EL CATÁLOGO
                             </button>
 
-                            {/* Mapeo de nombres de telas estilo lista lateral */}
+                            {/* Mapeo de nombres para la lista lateral */}
                             {nombresDeTelas.map((nombre) => (
                                 <button
                                     key={nombre}
@@ -108,7 +108,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                     </div>
                 </aside>
 
-                {/* 3. COLUMNA DERECHA: Cuadrícula de Telas */}
+                {/* COLUMNA DERECHA: Cuadrícula de las telas */}
                 <main className="flex-1">
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                         {inventarioFiltrado.length > 0 ? (
