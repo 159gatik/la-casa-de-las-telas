@@ -8,7 +8,7 @@ export const Footer = () => {
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-zinc-400">
                 {/* parte1 */}
                 <div className="flex flex-col gap-2 text-[#312107]">
-                    <h3 className=" font-bold text-lg tracking-widest">LA CASA DE LAS TELAS</h3>
+                    <h3 className=" font-bold font-serif text-lg tracking-widest">LA CASA DE LAS TELAS</h3>
                     <p className="text-sm text-black">Desarrollado por G.Rojas</p>
                 </div>
 

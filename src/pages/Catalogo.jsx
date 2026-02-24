@@ -4,6 +4,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
     const nombresDeTelas = ["Todas", ...new Set(inventario.map((tela) => tela.nombre.toUpperCase()))]
     const [pagina, setPagina] = useState(1);
+
     const productosPorPagina = 8;
 
 
@@ -48,11 +49,10 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
         (pagina - 1) * productosPorPagina,
         pagina * productosPorPagina
     );
+
     return (
         <div className="flex flex-col items-center w-full min-h-screen bg-background p-6">
-            {/* <h1 className="text-4xl font-bold mb-8 tracking-tighter uppercase">NUESTRAS TELAS</h1> */}
-
-            {/*  Buscador Estilizado */}
+            {/* 1. Buscador centrado arriba (opcional, podés ponerlo también dentro del main) */}
             <div className="w-full max-w-xl mb-12">
                 <Input
                     isClearable
@@ -66,88 +66,117 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                 />
             </div>
 
-            <div className="w-full max-w-10xl flex gap-2 overflow-x-auto pb-4 mb-8 justify-center flex-wrap">
-                {nombresDeTelas.map((nombre) => (
-                    <Button
-                        key={nombre}
-                        size="sm"
-                        radius="full"
-                        // Cambia de color si está seleccionado (primary) o si no (default/zinc)
-                        color={filtroActivo === nombre ? "primary" : "default"}
-                        variant={filtroActivo === nombre ? "solid" : "faded"}
-                        className={filtroActivo === nombre ? "font-bold shadow-lg text-black" : "text-[#312107]"}
-                        onClick={() => setFiltroActivo(nombre)}
-                    >
-                        {nombre}
-                    </Button>
-                ))}
-            </div>
+            {/* CONTENEDOR PRINCIPAL: Flexbox para Sidebar y Contenido */}
+            <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1400px]">
 
-            {/* 🧶 Cuadrícula de Telas */}
-            <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {inventarioFiltrado.length > 0 ? (
-                    itemsPaginados.map((tela) => (
-                        <Card key={tela.id} className="bg-zinc-900 border-none shadow-xl hover:scale-105 transition-transform flex flex-col h-full">
-                            <CardBody className="p-0 overflow-visible">
-                                <HeroImage
-                                    alt={tela.nombre}
-                                    className="w-full object-cover h-[240px] rounded-b-none"
-                                    src={tela.imagen || "https://via.placeholder.com/300"}
-                                    width="100%"
-                                />
-                            </CardBody>
-                            <CardHeader className="flex-col items-start px-4 py-4 gap-2 flex-grow">
-                                <div className="flex justify-between text-white w-full items-center mb-1">
-                                    <p className="text-tiny uppercase font-bold text-primary">{tela.color}</p>
-                                    {/* <div className="bg-green-900/30 px-2 py-1 rounded text-green-400 text-xs font-bold">
-                                        DISPONIBLE
-                                    </div> */}
-                                </div>
-                                <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
-                                <div className="bg-green-900/30 px-10 py-2 rounded text-green-400 text-xs font-bold">
-                                    DISPONIBLE
-                                </div>
+                {/* 2. COLUMNA IZQUIERDA: Filtros (Menú Lateral) */}
+                <aside className="w-full md:w-72 flex-shrink-0">
+                    <div className="sticky top-24"> {/* Se queda pegado al hacer scroll */}
+                        <h2 className="text-xl font-bold font-serif mb-6 flex items-center gap-2 text-[#312107] uppercase tracking-wider border-b border-zinc-800 pb-2">
+                            <span className="text-[#312107] "></span> Productos
+                        </h2>
 
-                                {/*BOTÓN DE WHATSAPP s */}
-                                <Button
-                                    className="w-full mt-4 font-bold bg-[#25D366] text-white shadow-lg hover:bg-[#20ba5a]"
-                                    radius="md"
-                                    onClick={() => enviarConsultaWhatsApp(tela)}
-                                    isDisabled={tela.stock <= 0}
+                        <div className="flex flex-col gap-1 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
+                            {/* Botón para resetear filtro */}
+                            <button
+                                onClick={() => { setFiltroActivo("Todas"); setPagina(1); }}
+                                className={`text-left py-3 px-4 rounded-lg text-sm transition-all ${filtroActivo === "Todas"
+                                    ? "bg-primary text-black font-bold shadow-lg"
+                                    : "text-zinc-400 hover:bg-zinc-800"
+                                    }`}
+                            >
+                                VER TODO EL CATÁLOGO
+                            </button>
+
+                            {/* Mapeo de nombres de telas estilo lista lateral */}
+                            {nombresDeTelas.map((nombre) => (
+                                <button
+                                    key={nombre}
+                                    onClick={() => {
+                                        setFiltroActivo(nombre);
+                                        setPagina(1);
+                                    }}
+                                    className={`text-left py-3 px-4 rounded-lg text-xs uppercase tracking-wide border-b border-zinc-900/50 transition-all ${filtroActivo === nombre
+                                        ? "bg-[#312107] text-white font-bold border-l-4 border-l-primary"
+                                        : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300"
+                                        }`}
                                 >
-                                    {tela.stock <= 0 ? "SIN STOCK" : "CONSULTAR x WHATSAPP"}
-                                </Button>
-                            </CardHeader>
-                        </Card>
-                    ))
-                ) : (
-                        <div className="col-span-full flex flex-col items-center py-20 rounded-3xl border-2  border-zinc-800">
-                        <p className="text-zinc-500 text-xl mb-4">No se encontraron telas que coincidan con "{busqueda}"</p>
-                            <Button color="success" variant="flat" onClick={() => setBusqueda("")}>
-                            Ver todo el catálogo
-                        </Button>
+                                    {nombre}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                )}
-            </div>
-            {paginasTotales > 1 && (
-                <div className="flex justify-center mt-10 mb-6">
-                    <Pagination
-                        isCompact
-                        showControls
-                        classNames={{
-                            wrapper: "gap-2", // Espaciado entre números
-                            item: "bg-transparent text-zinc-600 hover:bg-zinc-100", // Números normales
-                            cursor: "bg-[#312107] text-white font-bold", // El círculo que indica la página actual
-                        }}
-                        page={pagina}
-                        total={paginasTotales}
-                        onChange={(setPagina)
-                        }
-                    />
-                </div>
-            )}
-        </div>
+                </aside>
 
+                {/* 3. COLUMNA DERECHA: Cuadrícula de Telas */}
+                <main className="flex-1">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {inventarioFiltrado.length > 0 ? (
+                            itemsPaginados.map((tela) => (
+                                <Card key={tela.id} className="bg-[#312107] border-none shadow-xl hover:scale-[1.02] transition-transform flex flex-col h-full">
+                                    <CardBody className="p-0 overflow-visible">
+                                        <HeroImage
+                                            alt={tela.nombre}
+                                            className="w-full object-cover h-[240px] rounded-b-none"
+                                            src={tela.imagen || "https://via.placeholder.com/300"}
+                                            width="100%"
+                                        />
+                                    </CardBody>
+                                    <CardHeader className="flex-col items-start px-4 py-4 gap-2 flex-grow">
+                                        <div className="flex justify-between text-white w-full items-center mb-1">
+                                            <p className="text-tiny uppercase font-bold text-primary">{tela.color}</p>
+                                        </div>
+                                        <h4 className="font-bold text-xl text-white uppercase">{tela.nombre}</h4>
+                                        <div className="bg-green-900/30 px-6 py-1 rounded text-green-400 text-[10px] font-bold inline-block">
+                                            DISPONIBLE
+                                        </div>
+
+                                        <Button
+                                            className="w-full mt-4 font-bold bg-[#25D366] text-white shadow-lg hover:bg-[#20ba5a]"
+                                            radius="md"
+                                            onClick={() => enviarConsultaWhatsApp(tela)}
+                                            isDisabled={tela.stock <= 0}
+                                        >
+                                            {tela.stock <= 0 ? "SIN STOCK" : "CONSULTAR x WHATSAPP"}
+                                        </Button>
+                                    </CardHeader>
+                                </Card>
+                            ))
+                        ) : (
+                            <div className="col-span-full flex flex-col items-center py-20 rounded-3xl border-2 border-zinc-800">
+                                <p className="text-zinc-500 text-xl mb-4 text-center px-4">
+                                    No se encontraron telas que coincidan con "{busqueda}"
+                                </p>
+                                <Button color="success" variant="flat" onClick={() => setBusqueda("")}>
+                                    Ver todo el catálogo
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Paginación centrada dentro del área de productos */}
+                    {paginasTotales > 1 && (
+                        <div className="flex justify-center mt-12 mb-6">
+                            <Pagination
+                                isCompact
+                                showControls
+                                classNames={{
+                                    wrapper: "gap-2",
+                                    item: "bg-transparent text-zinc-600 hover:bg-zinc-800",
+                                    cursor: "bg-[#312107] text-white font-bold",
+                                }}
+                                page={pagina}
+                                total={paginasTotales}
+                                onChange={(newPage) => {
+                                    setPagina(newPage);
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                }}
+                            />
+                        </div>
+                    )}
+                </main>
+            </div>
+        </div>
     );
 }
 

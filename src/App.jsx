@@ -160,7 +160,7 @@ function App() {
         <BrowserRouter>
                 <Navbar isBordered className="bg-[#62420e] backdrop-blur-md">
                     <NavbarBrand>
-                        <Link to="/" className="font-bold text-3xl text-zinc-300 hover:text-white transition-colors">LA CASA DE LAS TELAS</Link>
+                        <Link to="/" className="font-bold font-serif text-3xl text-zinc-300 hover:text-white transition-colors">LA CASA DE LAS TELAS</Link>
                     </NavbarBrand>
                 <NavbarContent className="flex gap-8" justify="center">
                     <NavbarItem>
