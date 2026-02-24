@@ -1,11 +1,24 @@
 import { Card, CardHeader, CardBody, Image as HeroImage, Pagination, Input, Button } from "@heroui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroActivo }) {
 
     const nombresDeTelas = ["Todas", ...new Set(inventario.map((tela) => tela.nombre.toUpperCase()))]
     const [pagina, setPagina] = useState(1);
 
-    const productosPorPagina = 8;
+    useEffect(() => {
+        // Usamos una función de limpieza o un pequeño timeout para 
+        // evitar la actualización sincrónica que traba a React
+        const resetPagina = () => {
+            if (pagina !== 1) {
+                setPagina(1);
+            }
+        };
+
+        resetPagina();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filtroActivo, busqueda]); // Solo se dispara cuando cambias de categoría o buscás
+    const productosPorPagina = 9;
 
 
     const inventarioFiltrado = inventario.filter((item) => {
