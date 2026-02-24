@@ -45,9 +45,9 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
 
     const enviarConsultaWhatsApp = (tela) => {
-        const numeroTelefono = "5493704905184"; // El número de tu imagen
+        const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER; // El número de tu imagen
         const mensaje = encodeURIComponent(
-            `¡Hola! Consulto por la tela: ${tela.nombre} - color: ${tela.color}. `
+            `¡Hola! Consulto por el precio de la tela: ${tela.nombre} - color: ${tela.color}. `
         );
         const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
 
