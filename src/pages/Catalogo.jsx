@@ -123,7 +123,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
                 {/* COLUMNA DERECHA: Cuadrícula de las telas */}
                 <main className="flex-1">
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-15">
                         {inventarioFiltrado.length > 0 ? (
                             itemsPaginados.map((tela) => (
                                 <Card key={tela.id} className="bg-[#312107] border-none shadow-xl hover:scale-[1.02] transition-transform flex flex-col h-full">
