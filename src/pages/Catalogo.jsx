@@ -45,7 +45,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
 
     const enviarConsultaWhatsApp = (tela) => {
-        const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER; // El número de tu imagen
+        const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER; 
         const mensaje = encodeURIComponent(
             `¡Hola! Consulto por el precio de la tela: ${tela.nombre} - color: ${tela.color}. `
         );
@@ -79,7 +79,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                 />
             </div>
 
-            {/* CONTENEDOR PRINCIPAL: Flexbox para Sidebar y Contenido */}
+            {/* CONTENEDOR PRINCIPAL */}
             <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1400px]">
 
                 {/* COLUMNA IZQUIERDA: Filtros */}
@@ -167,7 +167,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                         )}
                     </div>
 
-                    {/* Paginación centrada dentro del área de productos */}
+                    {/* Paginacion centrada dentro del area de productos */}
                     {paginasTotales > 1 && (
                         <div className="flex justify-center mt-12 mb-6">
                             <Pagination

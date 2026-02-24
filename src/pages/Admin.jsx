@@ -158,7 +158,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
                 </CardBody>
             </Card>
 
-            {/* Gestión de Inventario (Lista de Cards) */}
+            {/* Gestion de Inventarip */}
             <div className="w-full max-w-7xl flex flex-col gap-6 mb-10">
                 <div className="flex justify-between items-center px-4">
                     <h3 className="text-xl font-bold  uppercase italic">Inventario Actual</h3>

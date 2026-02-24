@@ -5,7 +5,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
 
     return (
         <Card className="w-[280px] bg-zinc-900 border border-zinc-800 shadow-xl overflow-hidden group">
-            {/* Imagen de la Tela */}
+            {/* img de la tela */}
             <CardBody className="p-0 relative">
                 {imagen && (
                     <Image
@@ -17,7 +17,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
                     />
                 )}
 
-                {/* Chips de estado sobre la imagen */}
+                {/* estado sobre la tela */}
                 <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
                     {stock <= 3 && stock > 0 && (
                         <Chip color="danger" variant="shadow" size="sm" className="font-bold">¡Últimos metros!</Chip>
@@ -29,7 +29,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
 
             </CardBody>
 
-            {/* Información de la Tela */}
+            {/* Informacion de la Tela */}
             <CardHeader className="flex-col items-start px-4 py-3 gap-1">
                 <p className="text-tiny uppercase font-bold text-primary text-white tracking-widest">{color}</p>
                 <h4 className="font-bold text-lg text-white truncate w-full uppercase">{nombre}</h4>
@@ -46,7 +46,7 @@ const CardTela = ({ nombre, color, stock, precio, imagen, onEliminar, showAdmin,
 
             </CardHeader>
 
-            {/* 🛠️ Botones de Admin */}
+            {/*botones de admin */}
             {showAdmin && (
                 <div className="p-4 pt-0 flex gap-2 w-full">
                     <Button

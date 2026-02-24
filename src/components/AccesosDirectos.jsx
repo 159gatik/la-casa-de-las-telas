@@ -6,7 +6,6 @@ export const AccesoDirectos = ({setFiltroActivo}) => {
         <>
             <div className="w-full flex flex-wrap justify-center gap-8 md:gap-16 py-10 bg-background">
 
-                {/* 🔘 BOTÓN CIRCULAR: TELAS */}
                 <button
                     onClick={() => setFiltroActivo("telas")}
                     className="group flex flex-col items-center gap-4 transition-transform hover:scale-105 active:scale-95"
@@ -25,7 +24,6 @@ export const AccesoDirectos = ({setFiltroActivo}) => {
                     </div>
                 </button>
 
-                {/* 🔘 BOTÓN CIRCULAR: MERCERÍA */}
                 <button
                     onClick={() => setFiltroActivo("merceria")}
                     className="group flex flex-col items-center gap-4 transition-transform hover:scale-105 active:scale-95"

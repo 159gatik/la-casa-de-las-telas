@@ -8,7 +8,7 @@ const Ingreso = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (user === "admin2026" && pass === "telas2026") {
+        if (user === import.meta.env.VITE_USER && pass === import.meta.env.VITE_PASS) {
             onLogin(true);
             navigate("/")
         } else {

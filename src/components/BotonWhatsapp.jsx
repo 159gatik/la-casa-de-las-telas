@@ -7,24 +7,21 @@ const BotonWhatsApp = () => {
     const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
 
     return (
-        // Usamos el Tooltip de HeroUI para el globo de texto
         <Tooltip
             content="¡Consultá por tu tela!"
             placement="left"
             showArrow={true}
             classNames={{
                 base: [
-                    // Esto cambia el color de la flechita (arrow)
                     "before:bg-[#312107]",
                 ],
                 content: [
                     "py-2 px-4 shadow-xl",
-                    "text-white bg-[#312107]", // Fondo marrón y texto blanco
-                    "border border-zinc-700",   // Un borde fino para dar relieve
+                    "text-white bg-[#312107]", // fondo marrón y texto blanco
+                    "border border-zinc-700", 
                 ],
             }}
         >
-            {/* Aquí va tu botón de WhatsApp */}
             <Button
                 isIconOnly
                 className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-[#25D366] shadow-2xl"
