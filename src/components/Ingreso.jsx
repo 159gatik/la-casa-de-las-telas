@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase'; // Importá tu config de auth
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Ingreso = ({ onLogin }) => {
     const navigate = useNavigate()
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (user === import.meta.env.VITE_USER && pass === import.meta.env.VITE_PASS) {
+        try {
+            // Firebase valida la identidad en sus servidores, no en tu código
+            await signInWithEmailAndPassword(auth, user, pass);
             onLogin(true);
-            navigate("/")
-        } else {
-            alert("Usuario o contraseña incorrectos");
+            navigate("/");
+        } catch (err) {
+            console.error(err);
+            alert("Credenciales inválidas");
         }
     };
 
