@@ -22,20 +22,19 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
 
 
     const inventarioFiltrado = inventario.filter((item) => {
-        // se normaiza todo para que no haya tildes ni mayúsculas
         const normalizar = (t) => t ? String(t).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
         const busquedaTerm = normalizar(busqueda);
         const nombreItem = normalizar(item.nombre);
-        const categoriaItem = normalizar(item.categoria); // 👈 Importante normalizar la categoría también
+        const categoriaItem = normalizar(item.categoria);
+        const colorItem = normalizar(item.color); 
 
-        // Coincidencia por texto para el buscacor
         const coincideBusqueda = busquedaTerm === "" ||
             nombreItem.includes(busquedaTerm) ||
-            categoriaItem.includes(busquedaTerm);
+            categoriaItem.includes(busquedaTerm) ||
+            colorItem.includes(busquedaTerm);
 
-        // Coincidencia por Botón de Categoría
-        // se compara el filtro activo con la categoría del item
+
         const coincideFiltro = filtroActivo === "Todas" ||
             normalizar(item.categoria) === normalizar(filtroActivo) ||
             normalizar(item.nombre) === normalizar(filtroActivo);

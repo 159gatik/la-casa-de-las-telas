@@ -6,7 +6,7 @@ import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
 import Contabilidad from './pages/Contabilidad.jsx';
 import Ingreso from './components/Ingreso.jsx'
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@heroui/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@heroui/react";
 import { Footer } from './components/Footer.jsx';
 import BotonWhatsApp from './components/BotonWhatsapp.jsx';
 import { Banner } from './components/Banner.jsx';
@@ -157,47 +157,58 @@ function App() {
     }
     return (
         <div className="flex flex-col min-h-screen"> 
-        <BrowserRouter>
-                <Navbar isBordered className="bg-[#62420e] backdrop-blur-md">
-                    <NavbarBrand>
-                        <Link to="/" className="font-bold font-serif text-3xl text-zinc-300 hover:text-white transition-colors">LA CASA DE LAS TELAS</Link>
+            <BrowserRouter>
+                {/* Agregamos disableAnimation={false} para que el menú lateral funcione bien */}
+                <Navbar isBordered className="bg-[#62420e] backdrop-blur-md" disableAnimation={false}>
+
+                    {/* 1. Botón de hamburguesa (Solo visible en móviles) */}
+                    <NavbarContent className="sm:hidden" justify="start">
+                        <NavbarMenuToggle className="text-white" />
+                    </NavbarContent>
+
+                    {/* 2. Marca/Título: Ajustamos el tamaño de fuente para móviles (text-lg) */}
+                    <NavbarBrand className="justify-center sm:justify-start">
+                        <Link to="/" className="font-bold font-serif text-lg sm:text-2xl text-zinc-300 hover:text-white transition-colors">
+                            LA CASA DE LAS TELAS
+                        </Link>
                     </NavbarBrand>
-                <NavbarContent className="flex gap-8" justify="center">
-                    <NavbarItem>
-                        <Link to="/" className="text-zinc-300 hover:text-white transition-colors">Inicio</Link>
-                    </NavbarItem>
 
-                    {isLoggedIn && (
-                        <>
-                            <NavbarItem>
-                                <Link to="/admin" className="text-zinc-300 hover:text-white transition-colors">Admin</Link>
-                            </NavbarItem>
-                            <NavbarItem>
-                                <Link to="/contabilidad" className="text-zinc-300 hover:text-white transition-colors">Contabilidad</Link>
-                            </NavbarItem>
-                        </>
-                    )}
-                </NavbarContent>
+                    {/* 3. Menú para Escritorio (Oculto en móviles: hidden sm:flex) */}
+                    <NavbarContent className="hidden sm:flex gap-8" justify="center">
+                        <NavbarItem>
+                            <Link to="/" className="text-zinc-300 hover:text-white transition-colors">Inicio</Link>
+                        </NavbarItem>
 
-                    {/* <NavbarContent justify="end">
-                    {!isLoggedIn ? (
-                        <NavbarItem>
-                            <Button as={Link} to="/ingreso" color="primary" variant="flat">
-                                Ingreso
-                            </Button>
-                        </NavbarItem>
-                    ) : (
-                        <NavbarItem>
-                            <Button
-                                color="danger"
-                                variant="light"
-                                onClick={() => setIsLoggedIn(false)}
-                            >
-                                Salir
-                            </Button>
-                        </NavbarItem>
-                    )}
-                </NavbarContent> */}
+                        {isLoggedIn && (
+                            <>
+                                <NavbarItem>
+                                    <Link to="/admin" className="text-zinc-300 hover:text-white transition-colors">Admin</Link>
+                                </NavbarItem>
+                                <NavbarItem>
+                                    <Link to="/contabilidad" className="text-zinc-300 hover:text-white transition-colors">Contabilidad</Link>
+                                </NavbarItem>
+                            </>
+                        )}
+                    </NavbarContent>
+
+                    {/* 4. Menú Desplegable (Solo visible en móviles al tocar la hamburguesa) */}
+                    <NavbarMenu className="bg-[#62420e]/90 backdrop-blur-md pt-6">
+                        <NavbarMenuItem>
+                            <Link to="/" className="text-white text-lg w-full block py-2">Inicio</Link>
+                        </NavbarMenuItem>
+
+                        {isLoggedIn && (
+                            <>
+                                <NavbarMenuItem>
+                                    <Link to="/admin" className="text-white text-lg w-full block py-2">Admin</Link>
+                                </NavbarMenuItem>
+                                <NavbarMenuItem>
+                                    <Link to="/contabilidad" className="text-white text-lg w-full block py-2">Contabilidad</Link>
+                                </NavbarMenuItem>
+                            </>
+                        )}
+                    </NavbarMenu>
+
                 </Navbar>
 
 
