@@ -14,7 +14,6 @@ import { AccesoDirectos } from './components/AccesosDirectos.jsx';
 function App() {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    // Estado para el historial de ventas
     const [ventas, setVentas] = useState(() => {
         const guardadas = localStorage.getItem("ventas_telas");
         return guardadas ? JSON.parse(guardadas) : [];
@@ -44,6 +43,15 @@ function App() {
         return () => unsubscribe()
     }, []);
 
+    useEffect(() => {
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                if (data.country_name !== 'Argentina') {
+                    window.location.href = "https://www.google.com";
+                }
+            });
+    }, []);
 
 
     // Guardar en localStorage cada vez que cambie
@@ -158,22 +166,21 @@ function App() {
     return (
         <div className="flex flex-col min-h-screen"> 
             <BrowserRouter>
-                {/* Agregamos disableAnimation={false} para que el menú lateral funcione bien */}
                 <Navbar isBordered className="bg-[#62420e] backdrop-blur-md" disableAnimation={false}>
 
-                    {/* 1. Botón de hamburguesa (Solo visible en móviles) */}
+
                     <NavbarContent className="sm:hidden" justify="start">
                         <NavbarMenuToggle className="text-white" />
                     </NavbarContent>
 
-                    {/* 2. Marca/Título: Ajustamos el tamaño de fuente para móviles (text-lg) */}
+
                     <NavbarBrand className="justify-center sm:justify-start">
                         <Link to="/" className="font-bold font-serif text-lg sm:text-2xl text-zinc-300 hover:text-white transition-colors">
                             LA CASA DE LAS TELAS
                         </Link>
                     </NavbarBrand>
 
-                    {/* 3. Menú para Escritorio (Oculto en móviles: hidden sm:flex) */}
+
                     <NavbarContent className="hidden sm:flex gap-8" justify="center">
                         <NavbarItem>
                             <Link to="/" className="text-zinc-300 hover:text-white transition-colors">Inicio</Link>
@@ -191,7 +198,7 @@ function App() {
                         )}
                     </NavbarContent>
 
-                    {/* 4. Menú Desplegable (Solo visible en móviles al tocar la hamburguesa) */}
+
                     <NavbarMenu className="bg-[#62420e]/90 backdrop-blur-md pt-6">
                         <NavbarMenuItem>
                             <Link to="/" className="text-white text-lg w-full block py-2">Inicio</Link>

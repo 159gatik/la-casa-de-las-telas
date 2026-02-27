@@ -11,7 +11,7 @@ const Ingreso = ({ onLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Firebase valida la identidad en sus servidores, no en tu código
+
             await signInWithEmailAndPassword(auth, user, pass);
             onLogin(true);
             navigate("/");
