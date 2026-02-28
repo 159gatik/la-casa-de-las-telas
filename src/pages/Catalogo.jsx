@@ -1,5 +1,14 @@
 import { Card, CardHeader, CardBody, Image as HeroImage, Pagination, Input, Button, Modal, ModalBody, ModalContent, ModalFooter } from "@heroui/react";
 import { useState, useEffect } from "react";
+
+const styleImg = {
+    imagen: {
+        width: "430px",      // Recomendado '100%' para que se adapte al cuadradito
+        height: "322px",    // El alto que vos querés
+        objectFit: "cover"  // Clave para que la tela no se estire
+    }
+};
+
 function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroActivo }) {
 
     const nombresDeTelas = ["Todas", ...new Set(inventario.map((tela) => tela.nombre.toUpperCase()))]
@@ -128,7 +137,8 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                                     {/* Imagen de fondo */}
                                     <HeroImage
                                         src={tela.imagen}
-                                        className="cursor-pointer hover:scale-105 transition-transform"
+                                        style={styleImg.imagen}
+                                        className="cursor-pointer styleImg object-cover hover:scale-105 transition-transform"
                                         onClick={() => setImagenExpandida(tela)} // Guardamos la tela seleccionada
                                         removeWrapper
                                     />
@@ -204,38 +214,30 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                 scrollBehavior="inside"
             >
                 <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalBody className="p-0 overflow-hidden bg-white">
-                                <img
-                                    src={imagenExpandida?.imagen}
-                                    className="w-full h-auto object-contain max-h-[70vh]"
-                                    alt="Detalle de la tela"
-                                />
-                                <div className="p-6 bg-white">
-                                    <h3 className="text-2xl font-black uppercase text-[#62420e]">
-                                        {imagenExpandida?.nombre}
-                                    </h3>
-                                    <p className="text-gray-600 font-bold uppercase mt-1">
-                                        Color: {imagenExpandida?.color}
-                                    </p>
-                                    <p className="text-gray-500 text-sm mt-4">
-                                        Hacé clic en el botón de WhatsApp para consultar disponibilidad y precio.
-                                    </p>
-
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Cerrar
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
+                    <ModalBody className="p-0 overflow-y-auto">
+                        <img
+                            src={imagenExpandida?.imagen}
+                            className="w-full h-auto object-contain max-h-[60vh] sm:max-h-[70vh] bg-gray-50"
+                            alt="Detalle"
+                        />
+                        <div className="p-6 bg-white">
+                            <h3 className="text-xl font-black uppercase text-[#62420e]">
+                                {imagenExpandida?.nombre}
+                            </h3>
+                            <p className="text-gray-600 font-bold uppercase mt-2">
+                                Color: {imagenExpandida?.color}
+                            </p>
+                            <p className="text-gray-400 text-sm mt-4 italic">
+                                Hacé clic en el botón de WhatsApp para consultar disponibilidad y precio.
+                            </p>
+                        </div>
+                    </ModalBody>
                 </ModalContent>
             </Modal>
         </div>
     );
 }
+
+
 
 export default Catalogo;
