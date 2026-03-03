@@ -1,11 +1,11 @@
-import { Card, CardHeader, CardBody, Image as HeroImage, Pagination, Input, Button, Modal, ModalBody, ModalContent, ModalFooter } from "@heroui/react";
+import { Card, Image as HeroImage, Pagination, Input, Button, Modal, ModalBody, ModalContent, ModalFooter } from "@heroui/react";
 import { useState, useEffect } from "react";
 
 const styleImg = {
     imagen: {
-        width: "430px",      // Recomendado '100%' para que se adapte al cuadradito
-        height: "322px",    // El alto que vos querés
-        objectFit: "cover"  // Clave para que la tela no se estire
+        width: "430px",
+        height: "322px",
+        objectFit: "cover"  
     }
 };
 

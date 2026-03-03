@@ -8,7 +8,7 @@ const Admin = ({ inventario, onAgregar, onEliminar, onEditar, onReponer }) => {
     const CATEGORIAS_LISTA = [
         { key: "TELAS", label: "Telas" },
         { key: "MERCERIA", label: "Mercería" },
-        { key: "HERRAMIENTAS", label: "Herramientas" },
+        { key: "NUEVOINGRESO", label: "Nuevo Ingreso" },
         { key: "OFERTAS", label: "Ofertas" }
     ]
 

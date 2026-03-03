@@ -47,7 +47,7 @@ function App() {
         fetch('https://ipapi.co/json/')
             .then(res => res.json())
             .then(data => {
-                if (data.country_name !== 'Argentina') {
+                if (data.country_name !== 'ARG') {
                     window.location.href = "https://www.google.com";
                 }
             });
@@ -115,7 +115,8 @@ function App() {
                 stock: Number(nueva.stock),
                 stockInicial: Number(nueva.stockInicial),
                 color: nueva.color,
-                imagen: nueva.imagen
+                imagen: nueva.imagen,
+                categoria: nueva.categoria,
             })
             console.log("tela guardada con exito");
 
@@ -154,7 +155,7 @@ function App() {
                 stock: Number(telaActualizada.stock) || 0,
                 color: telaActualizada.color || "", // si es undefined usa ""
                 imagen: telaActualizada.imagen,
-                categoria: telaActualizada.categoria
+                categoria: telaActualizada.categoria,
             })
             console.log("Actualizada con exito");
 

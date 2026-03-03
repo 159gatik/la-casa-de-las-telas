@@ -7,7 +7,7 @@ export const Banner = () => {
                 src={ImgBanner}
                 alt="Banner La Casa de las Telas"
                 removeWrapper 
-                className="w-full flex justify-center bg-background shadow-lg "
+                className="w-full h-60 py-10 flex justify-center  "
             />
         </>
     );
