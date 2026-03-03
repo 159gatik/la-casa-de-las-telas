@@ -47,7 +47,7 @@ function App() {
         fetch('https://ipapi.co/json/')
             .then(res => res.json())
             .then(data => {
-                if (data.country_name !== 'ARG') {
+                if (data.country_name !== 'Argentina') {
                     window.location.href = "https://www.google.com";
                 }
             });
