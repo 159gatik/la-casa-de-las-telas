@@ -1,6 +1,6 @@
 import { db } from './firebase';
 import { collection, deleteDoc, onSnapshot, query, addDoc, updateDoc, doc, increment } from 'firebase/firestore';
-import { BrowserRouter, Route, Routes, Link, Navigate, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Catalogo from './pages/Catalogo.jsx';
 import Admin from './pages/Admin.jsx';
@@ -11,7 +11,7 @@ import { Footer } from './components/Footer.jsx';
 import BotonWhatsApp from './components/BotonWhatsapp.jsx';
 import { Banner } from './components/Banner.jsx';
 import { AccesoDirectos } from './components/AccesosDirectos.jsx';
-function App() {
+function App({ setPagina }) {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [ventas, setVentas] = useState(() => {
@@ -42,17 +42,6 @@ function App() {
         })
         return () => unsubscribe()
     }, []);
-
-    useEffect(() => {
-        fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-                if (data.country_name !== 'Argentina') {
-                    window.location.href = "https://www.google.com";
-                }
-            });
-    }, []);
-
 
     // Guardar en localStorage cada vez que cambie
     // useEffect(() => {
@@ -260,10 +249,14 @@ function App() {
                     </Routes>
                 </main>
             <BotonWhatsApp />
-                <Footer />
-
+                <Footer
+                    setFiltroActivo={setFiltroActivo}
+                    setPagina={setPagina}
+                />
             </BrowserRouter>
+
         </div>
+
     )
 }
  

@@ -1,11 +1,12 @@
-import { Card, Image as HeroImage, Pagination, Input, Button, Modal, ModalBody, ModalContent, ModalFooter } from "@heroui/react";
+import { Card, Image as HeroImage, Pagination, Input, Button, Modal, ModalBody, ModalContent, ModalFooter, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { useState, useEffect } from "react";
+import { CategoryFilters } from "../components/CategoryFilters";
 
 const styleImg = {
     imagen: {
         width: "430px",
         height: "322px",
-        objectFit: "cover"  
+        objectFit: "cover",
     }
 };
 
@@ -53,7 +54,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
     const enviarConsultaWhatsApp = (tela) => {
         const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER; 
         const mensaje = encodeURIComponent(
-            `¡Hola! Consulto por el precio de la tela: ${tela.nombre} - color: ${tela.color}. `
+            `¡Hola! Consulto por el precio de: ${tela.nombre} - color: ${tela.color}. `
         );
         const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
 
@@ -89,43 +90,12 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
             <div className="flex flex-col md:flex-row gap-8 w-full max-w-[1400px]">
 
                 {/* COLUMNA IZQUIERDA: Filtros */}
-                <aside className="w-full md:w-72 flex-shrink-0">
-                    <div className="sticky top-24"> {/* Se queda pegado al hacer scroll */}
-                        <h2 className="text-xl font-bold font-serif mb-6 flex items-center gap-2 text-[#312107] uppercase tracking-wider border-b border-zinc-800 pb-2">
-                            <span className="text-[#312107] "></span> Productos
-                        </h2>
-
-                        <div className="flex flex-col gap-1 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
-                            {/* Botón para resetear filtro */}
-                            <button
-                                onClick={() => { setFiltroActivo("Todas"); setPagina(1); }}
-                                className={`text-left py-3 px-4 rounded-lg text-sm transition-all ${filtroActivo === "Todas"
-                                    ? "bg-primary text-black font-bold shadow-lg"
-                                    : "text-zinc-400 hover:bg-zinc-800"
-                                    }`}
-                            >
-                                VER TODO EL CATÁLOGO
-                            </button>
-
-                            {/* Mapeo de nombres para la lista lateral */}
-                            {nombresDeTelas.map((nombre) => (
-                                <button
-                                    key={nombre}
-                                    onClick={() => {
-                                        setFiltroActivo(nombre);
-                                        setPagina(1);
-                                    }}
-                                    className={`text-left py-3 px-4 rounded-lg text-xs uppercase tracking-wide border-b border-zinc-900/50 transition-all ${filtroActivo === nombre
-                                        ? "bg-[#312107] text-white font-bold border-l-4 border-l-primary"
-                                        : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300"
-                                        }`}
-                                >
-                                    {nombre}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </aside>
+                <CategoryFilters
+                    nombresDeTelas={nombresDeTelas}
+                    filtroActivo={filtroActivo}
+                    setFiltroActivo={setFiltroActivo}
+                    setPagina={setPagina}
+                />
 
                 {/* COLUMNA DERECHA: Cuadrícula de las telas */}
                 <main className="flex-1">
@@ -133,13 +103,13 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                     <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 px-2">
                         {inventarioFiltrado.length > 0 ? (
                             itemsPaginados.map((tela) => (
-                                <Card key={tela.id} className="aspect-square relative group">
+                                <Card key={tela.id} className='aspect-square relative group ' isPressable  > 
                                     {/* Imagen de fondo */}
                                     <HeroImage
                                         src={tela.imagen}
                                         style={styleImg.imagen}
-                                        className="cursor-pointer styleImg object-cover hover:scale-105 transition-transform"
-                                        onClick={() => setImagenExpandida(tela)} // Guardamos la tela seleccionada
+                                        className=" cursor-pointer styleImg object-cover hover:scale-105 transition-transform"
+                                        onClick={() => setImagenExpandida(tela)}
                                         removeWrapper
                                     />
                                     <div className="absolute bottom-0 w-full p-3 bg-[#312107]/80 z-10">
@@ -184,7 +154,7 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                         )}
                     </div>
 
-                    {/* Paginacion centrada dentro del area de productos */}
+                    {/* Paginacion centrada para los productos */}
                     {paginasTotales > 1 && (
                         <div className="flex justify-center mt-12 mb-6">
                             <Pagination
@@ -234,7 +204,9 @@ function Catalogo({ inventario, busqueda, setBusqueda, filtroActivo, setFiltroAc
                     </ModalBody>
                 </ModalContent>
             </Modal>
+
         </div>
+
     );
 }
 

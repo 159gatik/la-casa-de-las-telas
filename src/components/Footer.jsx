@@ -1,6 +1,6 @@
 import { Divider, Link } from "@heroui/react";
 
-export const Footer = () => {
+export const Footer = ({ setFiltroActivo, setPagina }) => {
     return (
         <footer className="w-full bg-[#fdedd3] pt-10 pb-6 mt-auto">
             <Divider className="my-4 bg-zinc-800" />
@@ -17,6 +17,46 @@ export const Footer = () => {
                     <h4 className="font-semibold">Navegación</h4>
                     <div className="flex flex-col gap-1">
                         <Link href="/" size="sm" color="foreground" className="hover:text-primary">Inicio</Link>
+                        <Link
+                            as="button"
+                            size="sm"
+                            color="foreground"
+                            className="hover:text-[#62420e] cursor-pointer bg-transparent border-none p-0 justify-start h-auto font-normal"
+                            onPress={() => {
+                                setFiltroActivo("telas");
+                                if (typeof setPagina === 'function') setPagina(1);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                        >
+                            Telas
+                        </Link>
+                        <Link
+                            as="button"
+                            size="sm"
+                            color="foreground"
+                            className="hover:text-[#62420e] cursor-pointer bg-transparent border-none p-0 justify-start h-auto font-normal"
+                            onPress={() => {
+                                setFiltroActivo("merceria");
+                                if (typeof setPagina === 'function') setPagina(1);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                        >
+                            Merceria
+                        </Link>
+                        <Link
+                            as="button"
+                            size="sm"
+                            color="foreground"
+                            className="hover:text-[#62420e] cursor-pointer bg-transparent border-none p-0 justify-start h-auto font-normal"
+                            onPress={() => {
+                                setFiltroActivo("nuevoIngreso");
+                                if (typeof setPagina === 'function') setPagina(1);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                        >
+                            Nuevo Ingreso
+                        </Link>
+
                     </div>
                 </div>
 

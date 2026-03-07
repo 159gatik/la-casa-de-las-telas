@@ -1,8 +1,13 @@
 @import "tailwindcss";
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 @source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+:root {
+    font-family: 'Inter', sans-serif;
+}
 html,
 body {
     max-width: 100%;
     overflow-x: hidden;
+font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }

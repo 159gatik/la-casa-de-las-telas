@@ -1,4 +1,3 @@
-
 import ImgBotonTelas from '../assets/banner/telas.png'
 import ImgBotonMerceria from '../assets/banner/merceria.png'
 export const AccesoDirectos = ({setFiltroActivo}) => {
@@ -17,7 +16,7 @@ export const AccesoDirectos = ({setFiltroActivo}) => {
                             className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-300"
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-all">
-                            <span className="text-white font-black text-2xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
+                            <span className="text-white font-black text-1xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
                                 Telas
                             </span>
                         </div>
@@ -35,7 +34,7 @@ export const AccesoDirectos = ({setFiltroActivo}) => {
                             className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-300"
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-all">
-                            <span className="text-white font-black text-2xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
+                            <span className="text-white font-black text-1xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
                                 Mercería
                             </span>
                         </div>
@@ -48,7 +47,7 @@ export const AccesoDirectos = ({setFiltroActivo}) => {
                     <div className="relative w-30 h-30 md:w-56 md:h-56 bg-[#920B3A] rounded-full overflow-hidden shadow-2xl">
 
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/10 transition-all">
-                            <span className="text-white font-black text-2xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
+                            <span className="text-white font-black text-1xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
                                 Nuevo Ingreso
                             </span>
                         </div>

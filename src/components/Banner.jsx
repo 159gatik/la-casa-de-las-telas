@@ -1,14 +1,40 @@
-import { Image as HeroImage } from "@heroui/react";
-import ImgBanner from '../assets/banner/telas-banner.png';
+import { useState, useEffect } from "react";
+import Image1 from '../../public/image1.jpg';
+import Image2 from '../../public/image2.jpg';
+import Image3 from '../../public/image3.jpg';
+
 export const Banner = () => {
+    const images = [Image2, Image1, Image3];
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [images.length]);
+
     return (
-        <>
-            <HeroImage
-                src={ImgBanner}
-                alt="Banner La Casa de las Telas"
-                removeWrapper 
-                className="w-full h-60 py-10 flex justify-center  "
-            />
-        </>
+        <div className="relative w-full h-56 md:h-96 overflow-hidden ">
+
+            {images.map((img, index) => (
+                <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
+                >
+                    <img src={img} className="w-full h-full object-cover" alt={`Banner ${index + 1}`} />
+                </div>
+            ))}
+
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-3">
+                {images.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentIndex(index)}
+                        className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`}
+                    />
+                ))}
+            </div>
+        </div>
     );
 };
