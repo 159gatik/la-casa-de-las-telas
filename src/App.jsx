@@ -11,6 +11,7 @@ import { Footer } from './components/Footer.jsx';
 import BotonWhatsApp from './components/BotonWhatsapp.jsx';
 import { Banner } from './components/Banner.jsx';
 import { AccesoDirectos } from './components/AccesosDirectos.jsx';
+import { PromoModal } from './components/PromoModal.jsx';
 function App({ setPagina }) {
     const [inventario, setInventario] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -154,11 +155,10 @@ function App({ setPagina }) {
         }
     }
     return (
-        <div className="flex flex-col min-h-screen"> 
+        <div className="flex flex-col min-h-screen">
             <BrowserRouter>
+                <PromoModal></PromoModal>
                 <Navbar isBordered className="bg-[#62420e] backdrop-blur-md" disableAnimation={false}>
-
-
                     <NavbarContent className="sm:hidden" justify="start">
                         <NavbarMenuToggle className="text-white" />
                     </NavbarContent>

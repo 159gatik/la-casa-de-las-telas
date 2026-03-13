@@ -2,8 +2,8 @@ import { Button, Tooltip } from "@heroui/react"; // Agregamos Tooltip aquí
 import { MessageCircle } from "lucide-react";
 
 const BotonWhatsApp = () => {
-    const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER;;
-    const mensaje = encodeURIComponent('¡Hola! Quisiera saber el precio de una tela');
+    const numeroTelefono = import.meta.env.VITE_WHATSAPP_NUMBER;
+    const mensaje = encodeURIComponent('¡Hola! Quisiera saber el precio de una tela. El código de descuento: TELAS10');
     const url = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
 
     return (
