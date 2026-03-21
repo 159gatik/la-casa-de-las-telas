@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
-import Image1 from '../../public/image1.jpg';
 import Image2 from '../../public/image2.jpg';
 import Image3 from '../../public/image3.jpg';
+import Image0 from '../../public/image.jpg';
 
 export const Banner = () => {
-    const images = [Image2, Image1, Image3];
+    const images = [Image3, Image0, Image2,];
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-        }, 3000);
+        }, 5000);
         return () => clearInterval(interval);
     }, [images.length]);
 
     return (
-        <div className="relative w-full h-56 md:h-96 overflow-hidden ">
+        <div className="relative w-full  h-50 md:h-99 overflow-hidden ">
 
             {images.map((img, index) => (
                 <div

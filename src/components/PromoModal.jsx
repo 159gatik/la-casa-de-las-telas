@@ -53,7 +53,7 @@ export const PromoModal = () => {
                                 ¡Tenemos un regalo de bienvenida!
                             </p>
                             <p className="text-zinc-600 font-medium text-center">
-                             Disfrutá de un <strong className="text-[#62420e]">10% de descuento</strong> en tu compra.
+                                Disfrutá de un <strong className="text-[#62420e]">15% de descuento</strong> en tu compra.
                             </p>
 
                             {/* Caja destacada con el código */}
@@ -62,12 +62,12 @@ export const PromoModal = () => {
                                     Tu código de descuento:
                                 </span>
                                 <span className="font-bold text-3xl text-[#312107] tracking-widest">
-                                    TELAS10
+                                    TELAS15
                                 </span>
                             </div>
                         </ModalBody>    
                         <p className="text-zinc-600 text-center font-medium">
-                            *Válido hasta el sábado 14/03 inclusive*
+                            *Válido para todo Marzo*
                         </p>
                         <ModalFooter className="flex-col sm:flex-row justify-between border-t border-zinc-100 mt-4">
                             <Button
